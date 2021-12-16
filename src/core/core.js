@@ -10,7 +10,6 @@ export default class Core {
     }
 
     async init() {
-        // console.log("0x000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000008".substring(2+64*2))
         if (window.ethereum) {
             this.provider = new ethers.providers.Web3Provider(window.ethereum);
             this.signer = this.provider.getSigner();
@@ -24,9 +23,8 @@ export default class Core {
     async bookTable(data) {
         const txResponse = await this.contract.book(data.placeId, data.tableId);
         const txReceipt = await txResponse.wait();
-        const eventLogs = txReceipt.logs[txReceipt.logs.length - 1].data;
-        // console.log();
+        const eventLogs = parseInt(txReceipt.logs[txReceipt.logs.length - 1].data.substring(2+64*2), 16);
 
-        return {tx: txReceipt, response: txResponse};
+        return {tx: txReceipt, response: txResponse, nftId: eventLogs};
     }
 }

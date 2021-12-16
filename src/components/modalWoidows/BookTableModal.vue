@@ -54,8 +54,7 @@ export default {
     async bookPlaceTable() {
       if (this.chosenTableNumber) {
         const bookTableWriteRes = await this.$root.core.bookTable({placeId: this.modalBookDataToProcessGetter.ID, tableId: this.chosenTableNumber});
-        console.log(bookTableWriteRes);
-        // this.bookTableSaveData({ placeId: this.modalBookDataToProcessGetter.ID, table: this.chosenTableNumber });
+        this.bookTableSaveData({ placeId: this.modalBookDataToProcessGetter.ID, table: this.chosenTableNumber, nftId: bookTableWriteRes.nftId });
       }
     },
     chooseTable(number) {
