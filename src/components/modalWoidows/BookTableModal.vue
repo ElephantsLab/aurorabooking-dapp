@@ -15,7 +15,7 @@
                   ...
                 </tr>
                 <tr><h2>Table</h2>
-                  <td v-for="table in modalBookDataToProcessGetter.TABLES" v-bind:key="table">
+                  <td v-for="table in modalBookDataToProcessGetter.TABLES" v-on:click="chooseTable(table)" v-bind:key="table">
                     <button>{{ table }}</button>
                   </td>
                 </tr>
@@ -25,7 +25,7 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="modal-default-button">
+              <button class="modal-default-button" v-on:click="bookPlaceTable">
                 Book
               </button>
               <button class="modal-default-button" v-on:click="updateIsOpenBookModal(false)">
@@ -40,10 +40,28 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 
 export default {
-  methods: mapMutations(["updateIsOpenBookModal"]),
+  data() {
+    return {
+      chosenTableNumber: null
+    }
+  },
+  methods: {
+    ...mapMutations(["updateIsOpenBookModal"]),
+    ...mapActions(["bookTableSaveData"]),
+    async bookPlaceTable() {
+      if (this.chosenTableNumber) {
+        const bookTableWriteRes = await this.$root.core.bookTable({placeId: this.modalBookDataToProcessGetter.ID, tableId: this.chosenTableNumber});
+        console.log(bookTableWriteRes);
+        // this.bookTableSaveData({ placeId: this.modalBookDataToProcessGetter.ID, table: this.chosenTableNumber });
+      }
+    },
+    chooseTable(number) {
+      this.chosenTableNumber = number;
+    }
+  },
   computed: mapGetters(["modalBookDataToProcessGetter"]),
 }
 </script>

@@ -1,8 +1,13 @@
+// import axios from "axios";
+// const baseUrl = "http://aurorabooking.net/";
+
 export default {
     state: {
         userData: {address: null, isConnected: false},
         isBookModalOpen: false,
-        modalBookDataToProcess: {}
+        modalBookDataToProcess: {},
+        isSellModalOpen: false,
+        modalSellData: {}
     },
     actions: {
         async connectWallet(ctx) {
@@ -10,6 +15,17 @@ export default {
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 window.localStorage.setItem("address", accounts[0]);
                 ctx.commit("updateUserData", { address: accounts[0], isConnected: true });
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async bookTableSaveData(ctx, data) {
+            try {
+                const currentTimestamp = ~~(new Date().getTime()/1000);
+                console.log(data, currentTimestamp);
+                // await axios.post(baseUrl + "setNewBooking", {
+                //
+                // });
             } catch (error) {
                 console.log(error);
             }
@@ -24,6 +40,12 @@ export default {
         },
         updateModalBookDataToProcess(state, data) {
             state.modalBookDataToProcess = data;
+        },
+        updateIsOpenSellModal(state, data) {
+            state.isSellModalOpen = data;
+        },
+        updateModalSellDataToProcess(state, data) {
+            state.modalSellData = data;
         }
     },
     getters: {
@@ -35,6 +57,12 @@ export default {
         },
         modalBookDataToProcessGetter(state) {
             return state.modalBookDataToProcess;
+        },
+        isOpenSellModalGetter(state) {
+            return state.isSellModalOpen;
+        },
+        modalSellDataToProcessGetter(state) {
+            return state.modalSellData;
         }
     }
 }

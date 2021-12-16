@@ -21,7 +21,7 @@
               <button class="modal-default-button">
                 Sell
               </button>
-              <button class="modal-default-button" >
+              <button class="modal-default-button" v-on:click="updateIsOpenSellModal(false)">
                 Close
               </button>
             </slot>
@@ -33,8 +33,10 @@
 </template>
 
 <script>
-export default {
+import { mapMutations } from "vuex";
 
+export default {
+  methods: mapMutations(["updateIsOpenSellModal"])
 }
 </script>
 

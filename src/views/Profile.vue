@@ -5,10 +5,16 @@
     <h3 v-else>Connect your wallet...</h3>
     <div>
       <h2>Yours books</h2>
-      <table>
+      <table class="user-book">
         <tr>
-          <td>1...</td>
-          <td>2...</td>
+          <td>
+            <div v-on:click="updateIsOpenSellModal(true)">
+              <h3>Place</h3>
+              <h3>Table</h3>
+              <h3>Date</h3>
+            </div>
+            <button>Transfer</button>
+          </td>
         </tr>
       </table>
     </div>
@@ -20,10 +26,16 @@ import { mapGetters, mapMutations } from "vuex";
 
 export default {
   computed: mapGetters(["userDataGetter"]),
-  methods: mapMutations(["updateUserData"]),
+  methods: mapMutations(["updateUserData", "updateIsOpenSellModal"]),
   mounted() {
     const userAddress = window.localStorage.getItem("address");
     if (userAddress) this.updateUserData({address: userAddress, isConnected: true});
   }
 }
 </script>
+
+<style scoped>
+.user-book {
+  border: 1px solid black;
+}
+</style>
