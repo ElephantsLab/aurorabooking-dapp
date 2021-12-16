@@ -1,5 +1,5 @@
-// import axios from "axios";
-// const baseUrl = "http://aurorabooking.net/";
+import axios from "axios";
+const baseUrl = "http://aurorabooking.net:3000";
 
 export default {
     state: {
@@ -21,11 +21,13 @@ export default {
         },
         async bookTableSaveData(ctx, data) {
             try {
-                const currentTimestamp = ~~(new Date().getTime()/1000);
-                console.log(data, currentTimestamp);
-                // await axios.post(baseUrl + "setNewBooking", {
-                //
-                // });
+                console.log(data)
+                await axios.post(`${baseUrl}/setNewBooking`, {
+                    nft_id: data.nftId,
+                    place_id: data.placeId,
+                    table_number: data.table
+                },{headers: { 'content-type': 'application/x-www-form-urlencoded' }});
+                console.log(true)
             } catch (error) {
                 console.log(error);
             }
