@@ -1,0 +1,14 @@
+{
+  "RESTAURANTS": [
+    {"NAME": "Restaurant 1", "ID": 0, "TABLES": 10},
+    {"NAME": "Restaurant 2", "ID": 1, "TABLES": 12},
+    {"NAME": "Restaurant 3", "ID": 2, "TABLES": 9},
+    {"NAME": "Restaurant 4", "ID": 3, "TABLES": 7},
+    {"NAME": "Restaurant 5", "ID": 4, "TABLES": 20},
+    {"NAME": "Restaurant 6", "ID": 5, "TABLES": 13},
+    {"NAME": "Restaurant 7", "ID": 6, "TABLES": 15},
+    {"NAME": "Restaurant 8", "ID": 7, "TABLES": 10},
+    {"NAME": "Restaurant 9", "ID": 8, "TABLES": 12},
+    {"NAME": "Restaurant 10", "ID": 9, "TABLES": 14}
+  ]
+}
