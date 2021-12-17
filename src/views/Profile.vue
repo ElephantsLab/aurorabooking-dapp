@@ -38,14 +38,20 @@ export default {
     openSellModal(sellData) {
       this.updateIsOpenSellModal(true);
       this.updateModalSellDataToProcess({placeName: this.getPlaceName(sellData.placeId), placeId: sellData.placeId, nftId: sellData.nftId, tableNumber: sellData.tableNumber, date: sellData.date, orderId: sellData.orderId});
+    },
+    updateProfileData() {
+      const userAddress = window.localStorage.getItem("address");
+      if (userAddress) {
+        this.updateUserData({address: userAddress, isConnected: true});
+        this.fetchUserOrders({address: userAddress});
+      }
     }
   },
   mounted() {
-    const userAddress = window.localStorage.getItem("address");
-    if (userAddress) {
-      this.updateUserData({address: userAddress, isConnected: true});
-      this.fetchUserOrders({address: userAddress});
-    }
+    this.updateProfileData();
+    setInterval(() => {
+      this.updateProfileData();
+    }, 2000);
   }
 }
 </script>
