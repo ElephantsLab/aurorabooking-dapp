@@ -12,6 +12,7 @@
               <h3>{{ getPlaceName(order.placeId) }}</h3>
               <h3>Table {{ order.tableNumber }}</h3>
               <h3>Date {{ order.date }}</h3>
+              <img :src="getUserQrList[index]">
             </div>
             <button class="btn btn-primary">Transfer</button>
           </td>
@@ -26,10 +27,10 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "../assets/config.json";
 
 export default {
-  computed: mapGetters(["userDataGetter", "getUserOrders"]),
+  computed: mapGetters(["userDataGetter", "getUserOrders", "getUserQrList"]),
   methods: {
     ...mapMutations(["updateUserData", "updateIsOpenSellModal", "updateModalSellDataToProcess"]),
-    ...mapActions(["fetchUserOrders"]),
+    ...mapActions(["fetchUserOrders", "getUserQrCodes"]),
     getPlaceName(placeId) {
       for (let place of config.RESTAURANTS) {
         if (place.ID === placeId) return place.NAME;
@@ -49,9 +50,11 @@ export default {
   },
   mounted() {
     this.updateProfileData();
+    
     setInterval(() => {
       this.updateProfileData();
-    }, 2000);
+      this.getUserQrCodes(this.getUserOrders)
+    }, 10000);
   }
 }
 </script>
