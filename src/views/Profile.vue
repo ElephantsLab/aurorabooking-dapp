@@ -38,18 +38,18 @@
               <img :src="getUserQrList[index]" alt="">
             </div>
             <div class="card-footer">
-              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(order)">
+              <button  class="btn card-btn card-btn-border" v-on:click="openSellModal(order)">
                 <i class="i-price-tag-2-line"></i>
                 <span>Sell</span>
               </button>
-              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(order)">
+              <button  class="btn card-btn card-btn-border" v-on:click="openSellModal(order)">
                 <i class="i-arrow-left-right-line"></i>
                 <span>Transfer</span>
               </button>
-              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(order)">
-                <i class="i-shopping-cart-2-line"></i>
-                <span>Buy</span>
-              </button>
+<!--              <button  class="btn card-btn card-btn-border" v-on:click="openSellModal(order)">-->
+<!--                <i class="i-shopping-cart-2-line"></i>-->
+<!--                <span>Buy</span>-->
+<!--              </button>-->
             </div>
           </div>
         </div>
