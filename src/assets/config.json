@@ -3,5 +3,5 @@
     {"NAME": "Aurora gastronomy", "ID": 0, "TABLES": 10, "IMG": "", "STARS": ["five"], "TOWN": "KIEV"},
     {"NAME": "Near foods", "ID": 1, "TABLES": 12, "IMG": "", "STARS": ["five"], "TOWN": "LONDON"}
     ],
-  "baseURL": "https://aurorabooking.net:3000"
+  "baseURL": "https://aurorabooking.net/api"
 }
