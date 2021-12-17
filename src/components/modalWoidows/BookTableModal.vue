@@ -14,6 +14,37 @@
 
           <div class="modal-body">
             <slot name="body">
+              <div class="modal-data">
+                <img src="@/assets/images/cardImage1.png" />
+                <div class="modal-data-content">
+                  <a href="" class="card-name">L’Atelier Relais and Chateaux</a>
+                  <div class="card-describe">
+                    <span>Kyiv</span>
+                    <span>Asian cuisine</span>
+                  </div>
+                  <div class="stars-container three" >
+                    <i class="i-star-fill"> </i>
+                    <i class="i-star-fill"> </i>
+                    <i class="i-star-fill"> </i>
+                    <i class="i-star-fill"> </i>
+                    <i class="i-star-fill"> </i>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-input">
+                <div class="modal-input-title">Number of guests</div>
+                <div class="input">
+                  <i class="i-parent-line"></i>
+                  <input type="text" disabled>
+                </div>
+              </div>
+              <div class="modal-input">
+                <div class="modal-input-title">Date</div>
+                <div class="input">
+                  <input type="datetime-local">
+
+                </div>
+              </div>
               <table>
                 <tr>
                   <h2>Date</h2>
@@ -70,7 +101,7 @@ export default {
       chosenTableNumber: null,
       bookDate: new Date().toISOString().split("T")[0],
       availableTables: [],
-      updateTableInterval: undefined
+      updateTableInterval: undefined,
     };
   },
   methods: {
@@ -94,9 +125,14 @@ export default {
       this.chosenTableNumber = number;
     },
     async updateTableStatus(date) {
-      const usedTables = await this.fetchActiveOrders({ placeId: this.modalBookDataToProcessGetter.ID, date: date });
-      this.availableTables = this.availableTables.filter(el => !usedTables.includes(el));
-    }
+      const usedTables = await this.fetchActiveOrders({
+        placeId: this.modalBookDataToProcessGetter.ID,
+        date: date,
+      });
+      this.availableTables = this.availableTables.filter(
+        (el) => !usedTables.includes(el)
+      );
+    },
   },
   computed: {
     ...mapGetters(["modalBookDataToProcessGetter"]),
@@ -108,14 +144,14 @@ export default {
     for (let i = 0; i < this.modalBookDataToProcessGetter.TABLES; i++) {
       this.availableTables.push(i + 1);
     }
-    await this.updateTableStatus(~~(new Date(this.bookDate).getTime()/1000));
+    await this.updateTableStatus(~~(new Date(this.bookDate).getTime() / 1000));
     this.updateTableInterval = setInterval(async () => {
-      await this.updateTableStatus(~~(new Date(this.bookDate).getTime()/1000));
+      await this.updateTableStatus(~~(new Date(this.bookDate).getTime() / 1000));
     }, 2000);
   },
   beforeDestroy() {
     clearInterval(this.updateTableInterval);
-  }
+  },
 };
 </script>
 

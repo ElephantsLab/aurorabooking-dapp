@@ -103,7 +103,7 @@
               v-on:click="openBookModal(restaurant)"
              -->
               <div class="card-header">
-                <div class="card-stars three" v-bind:class="getPlaceStars(activeLot.place_id)">
+                <div class="card-stars stars-container three" v-bind:class="getPlaceStars(activeLot.place_id)">
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
