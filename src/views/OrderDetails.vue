@@ -4,9 +4,11 @@
     <h4>{{ getOrderDetails.description }}</h4>
     <img class="restaurant" v-bind:src="getOrderDetails.image">
     <table>
-      <tr>
-        {{ getOrderDetails.attributesArrRes }}
+       Atributes: [
+      <tr v-for="(attr, id) in getOrderDetails.attributesArrRes" :key="id">
+       {{ attr }}
       </tr>
+      ]
     </table>
   </div>
 </template>

@@ -79,7 +79,7 @@ export default {
 
                 const attributesArrRes = [];
                 for (let attribute of attributes) {
-                    attributesArrRes.push({value: attribute.value, type: attribute.trait_type});
+                    attributesArrRes.push({ trait_type: attribute.trait_type, value: attribute.value,});
                 }
 
                 ctx.commit("updateOrderDetails", {image, name, description, attributesArrRes});
