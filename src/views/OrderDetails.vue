@@ -1,14 +1,18 @@
 <template>
   <div>
-    <h3>{{ getPlaceName(getOrderDetails.placeId) }}</h3>
-    <h4>Table: {{ getOrderDetails.tableNumber }}</h4>
-    <img class="restaurant" v-bind:src="getOrderDetails.tableNumber">
+    <h3>{{ getOrderDetails.name }}</h3>
+    <h4>{{ getOrderDetails.description }}</h4>
+    <img class="restaurant" v-bind:src="getOrderDetails.image">
+    <table>
+      <tr>
+        {{ getOrderDetails.attributesArrRes }}
+      </tr>
+    </table>
   </div>
 </template>
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import config from "../assets/config.json";
 
 export default {
   data() {
@@ -18,11 +22,6 @@ export default {
   },
   methods: {
     ...mapActions(["fetchMetadataById"]),
-    getPlaceName(placeId) {
-      for (let place of config.RESTAURANTS) {
-        if (place.ID === placeId) return place.NAME;
-      }
-    },
   },
   computed: mapGetters(["getOrderDetails"]),
   mounted() {
@@ -35,6 +34,6 @@ export default {
 <style scoped>
 .restaurant {
   width: 150px;
-  height: 100px;
+  height: 150px;
 }
 </style>

@@ -56,12 +56,17 @@ export default {
         async fetchMetadataById(ctx, data) {
             try {
                 const metadataResponse = await axios.get(`${config.baseURL}/metadata/${data.id}`);
-                const placeId = metadataResponse.data.place_id;
-                const nftId = metadataResponse.data.nft_id;
-                const tableNumber = metadataResponse.data.table_number;
+                const name = metadataResponse.data.name;
+                const description = metadataResponse.data.description;
+                const attributes = metadataResponse.data.atributes;
                 const image = metadataResponse.data.image;
 
-                ctx.commit("updateOrderDetails", {placeId, nftId, tableNumber, image});
+                const attributesArrRes = [];
+                for (let attribute of attributes) {
+                    attributesArrRes.push({value: attribute.value, type: attribute.trait_type});
+                }
+
+                ctx.commit("updateOrderDetails", {image, name, description, attributesArrRes});
             } catch (error) {
                 console.log(error);
             }
