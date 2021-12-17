@@ -31,17 +31,68 @@
     <div class="container-content">
       <div class="container">
         <div class="wrapper-marketplace">
-          <div class="filter"></div>
+          <div class="filter">
+            <div class="filter-container">
+              <div class="filter-section">
+                <div class="filter-section-header">
+                  <span>Filter title </span>
+                  <i class="i-arrow-drop-down-line"></i>
+                </div>
+                <div class="filter-section-content">
+                  <div class="checkbox">
+                    <input type="checkbox" id="item1" />
+                    <label for="item1">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item2" />
+                    <label for="item2">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item3" />
+                    <label for="item3">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item4" />
+                    <label for="item4">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item5" />
+                    <label for="item5">Name </label>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-section">
+                <div class="filter-section-header">
+                  <span>Filter title </span>
+                  <i class="i-arrow-drop-down-line"></i>
+                </div>
+                <div class="filter-section-content">
+                  <div class="checkbox">
+                    <input type="checkbox" id="item1" />
+                    <label for="item1">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item2" />
+                    <label for="item2">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item3" />
+                    <label for="item3">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item4" />
+                    <label for="item4">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item5" />
+                    <label for="item5">Name </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="wrapper-cards">
-            <div
-              class="card card-marketplace"
-         
-            >
-            <!-- 
-                   v-for="(restaurant, index) in config.RESTAURANTS"
-              v-bind:key="index"
-              v-on:click="openBookModal(restaurant)"
-             -->
+            <div class="card card-marketplace">
               <div class="card-header">
                 <div class="card-stars three">
                   <i class="i-star-fill"> </i>
@@ -50,7 +101,7 @@
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                 </div>
-<!--                <img v-bind:src="" />-->
+                <img src="@/assets/images/cardImage2.png" alt="" />
               </div>
               <div class="card-content">
                 <a href="" class="card-name">name</a>
@@ -61,7 +112,88 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button class="btn card-btn card-btn-border">Booking</button>
+                <button class="btn card-btn card-btn-border">
+                  <i class="i-shopping-cart-2-line"></i>
+                  <span>Buy</span>
+                </button>
+              </div>
+            </div>
+            <div class="card card-marketplace">
+              <div class="card-header">
+                <div class="card-stars three">
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                </div>
+                <img src="@/assets/images/cardImage2.png" alt="" />
+              </div>
+              <div class="card-content">
+                <a href="" class="card-name">name</a>
+                <div class="card-describe">
+                  <span>Kiyv</span>
+                  <span>$$$$</span>
+                  <span>Asian cuisine</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn card-btn card-btn-border">
+                  <i class="i-shopping-cart-2-line"></i>
+                  <span>Buy</span>
+                </button>
+              </div>
+            </div>
+            <div class="card card-marketplace">
+              <div class="card-header">
+                <div class="card-stars three">
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                </div>
+                <img src="@/assets/images/cardImage2.png" alt="" />
+              </div>
+              <div class="card-content">
+                <a href="" class="card-name">name</a>
+                <div class="card-describe">
+                  <span>Kiyv</span>
+                  <span>$$$$</span>
+                  <span>Asian cuisine</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn card-btn card-btn-border">
+                  <i class="i-shopping-cart-2-line"></i>
+                  <span>Buy</span>
+                </button>
+              </div>
+            </div>
+            <div class="card card-marketplace">
+              <div class="card-header">
+                <div class="card-stars three">
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                  <i class="i-star-fill"> </i>
+                </div>
+                <img src="@/assets/images/cardImage2.png" alt="" />
+              </div>
+              <div class="card-content">
+                <a href="" class="card-name">name</a>
+                <div class="card-describe">
+                  <span>Kiyv</span>
+                  <span>$$$$</span>
+                  <span>Asian cuisine</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn card-btn card-btn-border">
+                  <i class="i-shopping-cart-2-line"></i>
+                  <span>Buy</span>
+                </button>
               </div>
             </div>
           </div>
