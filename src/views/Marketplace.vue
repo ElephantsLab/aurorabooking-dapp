@@ -45,10 +45,10 @@
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                 </div>
-                <img v-bind:src="restaurant.IMG" />
+                <img v-bind:src="" />
               </div>
               <div class="card-content">
-                <a href="" class="card-name">{{ restaurant.NAME }}</a>
+                <a href="" class="card-name">name</a>
                 <div class="card-describe">
                   <span>Kiyv</span>
                   <span>$$$$</span>
@@ -89,6 +89,7 @@ export default {
   },
   data() {
     return {
+      config: config,
       showSuccessMessage: false,
       showPendingMessage: false,
       showFailMessage: false,
