@@ -1,9 +1,9 @@
 import {ethers} from "ethers";
 const contractAddress = "0x8Dc36fB73063Cfa9d18767522b2145A9ca9DF6F9";
-// const nftContractAddress = "0x8588e2E8C3258BCef70e17dB88c0485Ce312E68E";
+const nftContractAddress = "0x8588e2E8C3258BCef70e17dB88c0485Ce312E68E";
 const NODE = "https://mainnet.aurora.dev";
 import abi from "./contractAbi.json";
-// import nftAbi from "./nftContractAbi.json";
+import nftAbi from "./nftContractAbi.json";
 // import axios from "axios";
 
 export default class Core {
@@ -17,6 +17,7 @@ export default class Core {
             this.provider = new ethers.providers.Web3Provider(window.ethereum);
             this.signer = this.provider.getSigner();
             this.contract = new ethers.Contract(contractAddress, abi, this.provider).connect(this.signer);
+            this.nftContract = new ethers.Contract(nftContractAddress, nftAbi, this.provider).connect(this.signer);
         } else {
             this.provider = new ethers.providers.JsonRpcProvider(NODE);
             this.contract = new ethers.Contract(contractAddress, abi, this.provider).connect("0x525b2f62856d9B1461739fcD05e938d9D92C0B56");
@@ -31,17 +32,27 @@ export default class Core {
         return {tx: txReceipt, response: txResponse, nftId: eventLogs};
     }
   
-    // async getTokenAllowance(data) {
-    //     // const token
-    // }
-    //
-    // async approveToSpendToken(data) {
-    //
-    // }
+    async getTokenAllowance(data) {
+        const getApproved = await this.nftContract.getApproved(data.nftId);
+        if (getApproved && getApproved.toLowerCase() === contractAddress.toLowerCase()) {
+            return await this.sellOrder({nftId: data.nftId, price: data.price});
+        } else {
+            if ((await this.approveToSpendToken({nftId: data.nftId})).tx.status) {
+                return await this.sellOrder({nftId: data.nftId, price: data.price});
+            }
+        }
+    }
 
-    async sellOrder() {
+    async approveToSpendToken(data) {
+        const txResponse = await this.nftContract.approve(contractAddress, data.nftId);
+        const txReceipt = await txResponse.wait();
+
+        return {tx: txReceipt};
+    }
+
+    async sellOrder(data) {
         // TODO: add amount
-        const txResponse = await this.contract.sell();
+        const txResponse = await this.contract.sell(data.nftId, data.price);
         const txReceipt = await txResponse.wait();
 
         return {tx: txReceipt.transactionHash};
