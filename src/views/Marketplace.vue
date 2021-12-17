@@ -32,7 +32,7 @@ methods: {
     return config.RESTAURANTS.find(el => el.ID === place_id).NAME;
   },
   async purchaseOrder(lot){
-    await this.$root.core.buy(lot.nft_id, lot.price);
+    await this.$root.core.buy(lot.lot_id, lot.price);
   }
   
 },
