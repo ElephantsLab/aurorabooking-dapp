@@ -65,3 +65,26 @@ header,
         padding: 0 12px;
     }
 }
+
+/* ----------------------- */
+
+@media (min-width: 521px) {
+    .modal{
+
+    }
+    .modal-wrapper{
+        border-radius: 10px;  
+        
+    }
+    .modal-wrapper .modal-container{
+min-width: 445px;
+min-height: 252px;  
+
+    }
+}
+@media (max-width: 520px) {
+    .modal-wrapper{
+        width: 100%;
+        height: 100%; 
+    }
+}

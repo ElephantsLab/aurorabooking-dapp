@@ -1,11 +1,16 @@
 <template>
   <transition name="modal">
-    <div class="modal-mask">
+    <div class="modal">
       <div class="modal-wrapper">
         <div class="modal-container">
-
           <div class="modal-header">
-            <slot name="header">{{ modalSellDataToProcessGetter.placeName }}</slot>
+            <slot name="header">
+              {{ modalSellDataToProcessGetter.placeName }}
+             
+            </slot>
+            <button class="btn-modal-close" v-on:click="updateIsOpenSellModal(false)">
+               <i class="i-close-line"></i>
+            </button>
           </div>
 
           <div class="modal-body">
@@ -19,12 +24,12 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="modal-default-button" v-on:click="sellToken(modalSellDataToProcessGetter)">
+              <button class="modal-btn-border modal-btn btn" v-on:click="sellToken(modalSellDataToProcessGetter)">
                 Sell
               </button>
-              <button class="modal-default-button" v-on:click="updateIsOpenSellModal(false)">
+              <!-- <button class="modal-btn-border modal-btn btn" v-on:click="updateIsOpenSellModal(false)">
                 Close
-              </button>
+              </button> -->
             </slot>
           </div>
         </div>
@@ -55,7 +60,7 @@ export default {
 </script>
 
 <style scoped>
-.modal-mask {
+/* .modal-mask {
   position: fixed;
   z-index: 9998;
   top: 0;
@@ -86,5 +91,5 @@ export default {
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;
-}
+} */
 </style>
