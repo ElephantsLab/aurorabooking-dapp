@@ -1,30 +1,30 @@
 <template>
   <div>
     <!-- old -->
-    <div>
-      <div class="mainContent">
-        <div v-for="activeLot in getActiveLots" :key="activeLot.id">
-          <div>
-            <p>Restaurant: {{ getPlaceName(activeLot.place_id) }}</p>
-            <p>Table number: {{ activeLot.table_number }}</p>
-            <p>Order price: {{ activeLot.price }}</p>
-            <button @click="purchaseOrder(activeLot)">Purchase lot</button>
-          </div>
-        </div>
-      </div>
-      <transaction-status
-        :showSuccess="showSuccessMessage"
-        :showPending="showPendingMessage"
-        :showFail="showFailMessage"
-      />
-    </div>
+<!--    <div>-->
+<!--      <div class="mainContent">-->
+<!--        <div v-for="activeLot in getActiveLots" :key="activeLot.id">-->
+<!--          <div>-->
+<!--            <p>Restaurant: {{ getPlaceName(activeLot.place_id) }}</p>-->
+<!--            <p>Table number: {{ activeLot.table_number }}</p>-->
+<!--            <p>Order price: {{ activeLot.price }}</p>-->
+<!--            <button @click="purchaseOrder(activeLot)">Purchase lot</button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <transaction-status-->
+<!--        :showSuccess="showSuccessMessage"-->
+<!--        :showPending="showPendingMessage"-->
+<!--        :showFail="showFailMessage"-->
+<!--      />-->
+<!--    </div>-->
 
     <!-- new -->
 
     <div class="container">
       <div class="section-title">Marketplace</div>
       <div class="section-row">
-        <div>12 023 proposals</div>
+        <div>{{ getActiveLots.length }}</div>
         <!-- <div></div> -->
       </div>
     </div>
@@ -35,7 +35,7 @@
           <div class="wrapper-cards">
             <div
               class="card card-marketplace"
-         
+              v-for="activeLot in getActiveLots" :key="activeLot.id"
             >
             <!-- 
                    v-for="(restaurant, index) in config.RESTAURANTS"
@@ -43,25 +43,25 @@
               v-on:click="openBookModal(restaurant)"
              -->
               <div class="card-header">
-                <div class="card-stars three">
+                <div class="card-stars three" v-bind:class="getPlaceStars(activeLot.place_id)">
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                 </div>
-                <img src="" />
+                <img src="@/assets/images/cardImage2.png" />
               </div>
               <div class="card-content">
-                <a href="" class="card-name">name</a>
+                <a href="" class="card-name">{{ getPlaceName(activeLot.place_id) }}</a>
                 <div class="card-describe">
-                  <span>Kiyv</span>
-                  <span>$$$$</span>
-                  <span>Asian cuisine</span>
+                  <span>{{ getPlaceTown(activeLot.place_id) }}</span>
+                  <span>{{ activeLot.price }} $</span>
+<!--                  <span>Asian cuisine</span>-->
                 </div>
               </div>
               <div class="card-footer">
-                <button class="btn card-btn card-btn-border">Booking</button>
+                <button class="btn card-btn card-btn-border" @click="purchaseOrder(activeLot)">Purchase lot</button>
               </div>
             </div>
           </div>
@@ -97,6 +97,15 @@ export default {
     ...mapActions(["fetchAllActiveLots", "deletePurchasedLot"]),
     getPlaceName(place_id) {
       return config.RESTAURANTS.find((el) => el.ID === place_id).NAME;
+    },
+    getPlaceStars(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).STARS;
+    },
+    getPlaceTown(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).TOWN;
+    },
+    getPlaceImage(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).IMG;
     },
     async purchaseOrder(lot) {
       try {

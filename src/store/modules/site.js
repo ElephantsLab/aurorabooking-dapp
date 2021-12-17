@@ -89,7 +89,7 @@ export default {
         },
       async fetchAllActiveLots(ctx) {
             try {
-                const activeLotsResponse = await axios.get(`${config.baseURL}/getAllActiveLots`)
+                const activeLotsResponse = await axios.get(`${config.baseURL}/getAllActiveLots`);
                 ctx.commit("updateActiveLots", activeLotsResponse.data);
               } catch (error) {
                 console.log(error);
