@@ -8,7 +8,8 @@ export default {
         modalBookDataToProcess: {},
         isSellModalOpen: false,
         modalSellData: {},
-        userOrders: []
+        userOrders: [],
+        orderDetails: {}
     },
     actions: {
         async connectWallet(ctx) {
@@ -51,6 +52,19 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+        async fetchMetadataById(ctx, data) {
+            try {
+                const metadataResponse = await axios.get(`${config.baseURL}/metadata/${data.id}`);
+                const placeId = metadataResponse.data.place_id;
+                const nftId = metadataResponse.data.nft_id;
+                const tableNumber = metadataResponse.data.table_number;
+                const image = metadataResponse.data.image;
+
+                ctx.commit("updateOrderDetails", {placeId, nftId, tableNumber, image});
+            } catch (error) {
+                console.log(error);
+            }
         }
     },
     mutations: {
@@ -71,6 +85,9 @@ export default {
         },
         updateUserOrders(state, data) {
             state.userOrders = data;
+        },
+        updateOrderDetails(state, data) {
+            state.orderDetails = data;
         }
     },
     getters: {
@@ -91,6 +108,9 @@ export default {
         },
         getUserOrders(state) {
             return state.userOrders;
+        },
+        getOrderDetails(state) {
+            return state.orderDetails;
         }
     }
 }

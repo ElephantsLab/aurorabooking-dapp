@@ -5,7 +5,7 @@
         <div class="modal-container">
 
           <div class="modal-header">
-            <slot name="header">NAME</slot>
+            <slot name="header">{{ modalSellDataToProcessGetter.placeName }}</slot>
           </div>
 
           <div class="modal-body">
@@ -33,10 +33,11 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
-  methods: mapMutations(["updateIsOpenSellModal"])
+  methods: mapMutations(["updateIsOpenSellModal"]),
+  computed: mapGetters(["modalSellDataToProcessGetter"])
 }
 </script>
 

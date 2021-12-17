@@ -8,7 +8,7 @@
       <table class="user-book" v-if="getUserOrders">
         <tr>
           <td v-for="(order, index) in getUserOrders" v-bind:key="index">
-            <div v-on:click="updateIsOpenSellModal(true)">
+            <div v-on:click="openSellModal(order)">
               <h3>{{ getPlaceName(order.placeId) }}</h3>
               <h3>Table {{ order.tableNumber }}</h3>
               <h3>Date {{ order.date }}</h3>
@@ -28,12 +28,16 @@ import config from "../assets/config.json";
 export default {
   computed: mapGetters(["userDataGetter", "getUserOrders"]),
   methods: {
-    ...mapMutations(["updateUserData", "updateIsOpenSellModal"]),
+    ...mapMutations(["updateUserData", "updateIsOpenSellModal", "updateModalSellDataToProcess"]),
     ...mapActions(["fetchUserOrders"]),
     getPlaceName(placeId) {
       for (let place of config.RESTAURANTS) {
         if (place.ID === placeId) return place.NAME;
       }
+    },
+    openSellModal(sellData) {
+      this.updateIsOpenSellModal(true);
+      this.updateModalSellDataToProcess({placeName: this.getPlaceName(sellData.placeId), placeId: sellData.placeId, nftId: sellData.nftId, tableNumber: sellData.tableNumber, date: sellData.date});
     }
   },
   mounted() {

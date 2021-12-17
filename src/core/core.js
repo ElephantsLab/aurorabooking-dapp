@@ -1,7 +1,9 @@
 import {ethers} from "ethers";
 const contractAddress = "0x8Dc36fB73063Cfa9d18767522b2145A9ca9DF6F9";
+// const nftContractAddress = "0x8588e2E8C3258BCef70e17dB88c0485Ce312E68E";
 const NODE = "https://mainnet.aurora.dev";
 import abi from "./contractAbi.json";
+// import nftAbi from "./nftContractAbi.json";
 // import axios from "axios";
 
 export default class Core {
@@ -27,6 +29,22 @@ export default class Core {
         const eventLogs = parseInt(txReceipt.logs[txReceipt.logs.length - 1].data.substring(2+64*2), 16);
 
         return {tx: txReceipt, response: txResponse, nftId: eventLogs};
+    }
+
+    // async getTokenAllowance(data) {
+    //     // const token
+    // }
+    //
+    // async approveToSpendToken(data) {
+    //
+    // }
+
+    async sellOrder() {
+        // TODO: add amount
+        const txResponse = await this.contract.sell();
+        const txReceipt = await txResponse.wait();
+
+        return {tx: txReceipt.transactionHash};
     }
     // //**************************post requests**************************
     // async setNewLot(id,price){
