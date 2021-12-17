@@ -43,7 +43,6 @@
 
           <div class="modal-footer">
             <slot name="footer">
-            {{ bookDateRes }}
               <button class="modal-btn modal-btn-border btn" v-on:click="bookPlaceTable">
                 Book
               </button>
@@ -70,6 +69,7 @@ export default {
       chosenTableNumber: null,
       bookDate: new Date().toISOString().split("T")[0],
       availableTables: [],
+      updateTableInterval: undefined
     };
   },
   methods: {
@@ -108,10 +108,13 @@ export default {
       this.availableTables.push(i + 1);
     }
     await this.updateTableStatus(~~(new Date(this.bookDate).getTime()/1000));
-    setInterval(async () => {
+    this.updateTableInterval = setInterval(async () => {
       await this.updateTableStatus(~~(new Date(this.bookDate).getTime()/1000));
     }, 2000);
   },
+  beforeDestroy() {
+    clearInterval(this.updateTableInterval);
+  }
 };
 </script>
 
