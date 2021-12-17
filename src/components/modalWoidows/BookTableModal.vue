@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       chosenTableNumber: null,
-      bookDate: 0,
+      bookDate: new Date().toISOString().split('T')[0],
       availableTables: []
     }
   },
