@@ -85,6 +85,23 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+        async fetchActiveOrders(ctx, data) {
+            try {
+                const activeOrdersResponse = await axios.get(`${config.baseURL}/getTodaysOrders`);
+                const tableOrdered = [];
+
+                console.log(activeOrdersResponse.data)
+                for (let order of activeOrdersResponse.data) {
+                    if (order.place_id === data.placeId) {
+                        tableOrdered.push(order.table_number);
+                    }
+                }
+
+                return
+            } catch (error) {
+                console.log(error);
+            }
         }
     },
     mutations: {

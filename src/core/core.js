@@ -57,33 +57,4 @@ export default class Core {
 
         return {tx: txReceipt.transactionHash};
     }
-    // //**************************post requests**************************
-    // async setNewLot(id,price){
-    //     const timestamp = Math.floor(new Date() / 1000);
-    //     await axios.post(`${this.baseURL}/setNewLot`, this.baseURL, {
-    //         id,
-    //         price,
-    //         date: timestamp
-    //     },{headers: { 'content-type': 'application/x-www-form-urlencoded' }});
-    //
-    // }
-    // //*********************************get requests **************************
-    // async getUserActiveLots(userAddress){
-    //     const result = axios.get(`${this.baseURL}/getUserActiveLots`,{
-    //         baseURL: this.baseURL,
-    //         params:{
-    //             address: userAddress
-    //         }
-    //     })
-    //     return result.data
-    // }
-    // async getMetadata(nft_id){
-    //     const result = axios.get(`${this.baseURL}/metadata/:${nft_id}`,{
-    //         baseURL: this.baseURL,
-    //         params:{
-    //             id: nft_id
-    //         }
-    //     })
-    //     return result.data
-    // }
 }
