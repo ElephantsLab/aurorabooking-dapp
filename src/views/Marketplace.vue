@@ -24,7 +24,7 @@
     <div class="container">
       <div class="section-title">Marketplace</div>
       <div class="section-row">
-        <div v-if="getActiveLots.length">{{ getActiveLots.length }}</div>
+        <div v-if="getActiveLots.length">{{ getActiveLots.length }} results</div>
         <div v-else>there are no active lots</div>
         <!-- <div></div> -->
       </div>
@@ -36,60 +36,60 @@
             <div class="filter-container">
               <div class="filter-section">
                 <div class="filter-section-header">
-                  <span>Filter title </span>
+                  <span>Filter lots </span>
                   <i class="i-arrow-drop-down-line"></i>
                 </div>
                 <div class="filter-section-content">
                   <div class="checkbox">
                     <input type="checkbox" id="item1" />
-                    <label for="item1">Name </label>
+                    <label for="item1">Time </label>
                   </div>
                   <div class="checkbox">
                     <input type="checkbox" id="item2" />
-                    <label for="item2">Name </label>
+                    <label for="item2">Price </label>
                   </div>
                   <div class="checkbox">
                     <input type="checkbox" id="item3" />
-                    <label for="item3">Name </label>
+                    <label for="item3">Place </label>
                   </div>
                   <div class="checkbox">
                     <input type="checkbox" id="item4" />
-                    <label for="item4">Name </label>
+                    <label for="item4">Table </label>
                   </div>
-                  <div class="checkbox">
-                    <input type="checkbox" id="item5" />
-                    <label for="item5">Name </label>
-                  </div>
+<!--                  <div class="checkbox">-->
+<!--                    <input type="checkbox" id="item5" />-->
+<!--                    <label for="item5">Name </label>-->
+<!--                  </div>-->
                 </div>
               </div>
-              <div class="filter-section">
-                <div class="filter-section-header">
-                  <span>Filter title </span>
-                  <i class="i-arrow-drop-down-line"></i>
-                </div>
-                <div class="filter-section-content">
-                  <div class="checkbox">
-                    <input type="checkbox" id="item1" />
-                    <label for="item1">Name </label>
-                  </div>
-                  <div class="checkbox">
-                    <input type="checkbox" id="item2" />
-                    <label for="item2">Name </label>
-                  </div>
-                  <div class="checkbox">
-                    <input type="checkbox" id="item3" />
-                    <label for="item3">Name </label>
-                  </div>
-                  <div class="checkbox">
-                    <input type="checkbox" id="item4" />
-                    <label for="item4">Name </label>
-                  </div>
-                  <div class="checkbox">
-                    <input type="checkbox" id="item5" />
-                    <label for="item5">Name </label>
-                  </div>
-                </div>
-              </div>
+<!--              <div class="filter-section">-->
+<!--                <div class="filter-section-header">-->
+<!--                  <span>Filter title </span>-->
+<!--                  <i class="i-arrow-drop-down-line"></i>-->
+<!--                </div>-->
+<!--                <div class="filter-section-content">-->
+<!--                  <div class="checkbox">-->
+<!--                    <input type="checkbox" id="item1" />-->
+<!--                    <label for="item1">Name </label>-->
+<!--                  </div>-->
+<!--                  <div class="checkbox">-->
+<!--                    <input type="checkbox" id="item2" />-->
+<!--                    <label for="item2">Name </label>-->
+<!--                  </div>-->
+<!--                  <div class="checkbox">-->
+<!--                    <input type="checkbox" id="item3" />-->
+<!--                    <label for="item3">Name </label>-->
+<!--                  </div>-->
+<!--                  <div class="checkbox">-->
+<!--                    <input type="checkbox" id="item4" />-->
+<!--                    <label for="item4">Name </label>-->
+<!--                  </div>-->
+<!--                  <div class="checkbox">-->
+<!--                    <input type="checkbox" id="item5" />-->
+<!--                    <label for="item5">Name </label>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
             </div>
           </div>
           <div class="wrapper-cards">
@@ -110,7 +110,7 @@
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                 </div>
-                <img src="@/assets/images/cardImage2.png" />
+                <img v-bind:src="getPlaceImage(activeLot.place_id)" />
               </div>
               <div class="card-content">
                 <a href="" class="card-name">{{ getPlaceName(activeLot.place_id) }}</a>
