@@ -50,7 +50,7 @@
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                 </div>
-                <img v-bind:src="" />
+                <img src="" />
               </div>
               <div class="card-content">
                 <a href="" class="card-name">name</a>

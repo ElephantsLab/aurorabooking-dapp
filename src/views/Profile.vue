@@ -9,7 +9,7 @@
     
     <div class="container-content">
       <div class="container">
-        <div class="wrapper-cards">
+        <div v-for="(order, index) in getUserOrders" :key="index" class="wrapper-cards">
           <div
             class="card card-profile"
 
@@ -26,14 +26,14 @@
                <img  src="@/assets/images/cardImage1.png" alt="" />       
             </div>
             <div class="card-content">
-              <a href="" class="card-name"> restaurant.NAME </a>
+              <a href="" class="card-name"> {{getRestName(order.placeId)}} </a>
               <div class="card-describe">
-                <span> restaurant.TOWN</span>
+                <span> Table number:{{order.tableNumber }}</span>
 
               </div>
               <div class="date">
                 <i class="i-calendar-event-line"></i>
-                <span>12 December 2021</span>
+                <span>{{order.date}}</span>
               </div>
             </div>
             <div class="card-footer">
@@ -112,6 +112,9 @@ export default {
         this.fetchUserOrders({ address: userAddress });
       }
     },
+    getRestName(place_id){
+      return config.RESTAURANTS.find(el => el.ID === place_id).NAME
+    }
   },
 
   mounted() {
