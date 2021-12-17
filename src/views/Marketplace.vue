@@ -34,9 +34,14 @@
           <div class="filter"></div>
           <div class="wrapper-cards">
             <div
-              class="card card-booking"
-             
+              class="card card-marketplace"
+         
             >
+            <!-- 
+                   v-for="(restaurant, index) in config.RESTAURANTS"
+              v-bind:key="index"
+              v-on:click="openBookModal(restaurant)"
+             -->
               <div class="card-header">
                 <div class="card-stars three">
                   <i class="i-star-fill"> </i>
@@ -63,18 +68,6 @@
         </div>
       </div>
     </div>
-    <table>
-      <tr
-        v-for="(restaurant, index) in config.RESTAURANTS"
-        v-bind:key="index"
-        v-on:click="openBookModal(restaurant)"
-      >
-        <td>
-          <h4>{{ restaurant.NAME }}</h4>
-        </td>
-        <td><img class="restaurant" v-bind:src="restaurant.IMG" /></td>
-      </tr>
-    </table>
   </div>
 </template>
 
