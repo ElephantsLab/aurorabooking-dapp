@@ -1,6 +1,6 @@
 import {ethers} from "ethers";
 const contractAddress = "0x8Dc36fB73063Cfa9d18767522b2145A9ca9DF6F9";
-const nftContractAddress = "0x8588e2E8C3258BCef70e17dB88c0485Ce312E68E";
+const nftContractAddress = "0xf26F41335fBDfd8F4515EA4b65DaFBd7581ccC85";
 const NODE = "https://mainnet.aurora.dev";
 import abi from "./contractAbi.json";
 import nftAbi from "./nftContractAbi.json";
