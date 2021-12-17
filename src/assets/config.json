@@ -10,5 +10,6 @@
     {"NAME": "Restaurant 8", "ID": 7, "TABLES": 10, "IMG": ""},
     {"NAME": "Restaurant 9", "ID": 8, "TABLES": 12, "IMG": ""},
     {"NAME": "Restaurant 10", "ID": 9, "TABLES": 14,"IMG": ""}
-  ]
+    ],
+  "baseURL": "https://aurorabooking.net:3000"
 }
