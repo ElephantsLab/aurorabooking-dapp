@@ -24,12 +24,12 @@ export default {
         },
         async bookTableSaveData(ctx, data) {
             try {
-              const currentTimestamp = ~~(new Date().getTime()/1000);
+              // const currentTimestamp = ~~(new Date().getTime()/1000);
                 await axios.post(`${config.baseURL}/setNewBooking`, {
                     nft_id: data.nftId,
                     place_id: data.placeId,
                     table_number: data.table,
-                    date: currentTimestamp
+                    date: data.date
                 });
                 console.log(true)
             } catch (error) {
@@ -43,7 +43,8 @@ export default {
                 await axios.post(`${config.baseURL}/setNewLot`, {
                     id: data.orderId,
                     price: data.price,
-                    date: timestamp
+                    date: timestamp,
+                    lot_id: data.lotId
                 });
                 console.log(true);
             } catch (error) {

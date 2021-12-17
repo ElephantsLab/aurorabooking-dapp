@@ -1,5 +1,5 @@
 import {ethers} from "ethers";
-const contractAddress = "0x8Dc36fB73063Cfa9d18767522b2145A9ca9DF6F9";
+const contractAddress = "0xFA69c287c2dF2C56c8a390192D786042f7d951C4";
 const nftContractAddress = "0xf26F41335fBDfd8F4515EA4b65DaFBd7581ccC85";
 const NODE = "https://mainnet.aurora.dev";
 import abi from "./contractAbi.json";
@@ -35,10 +35,12 @@ export default class Core {
     async getTokenAllowance(data) {
         const getApproved = await this.nftContract.getApproved(data.nftId);
         if (getApproved && getApproved.toLowerCase() === contractAddress.toLowerCase()) {
-            return await this.sellOrder({nftId: data.nftId, price: data.price});
+            const sellReceipt = await this.sellOrder({nftId: data.nftId, price: data.price});
+            return parseInt(sellReceipt.tx.logs[sellReceipt.tx.logs.length - 1].topics[3].substring(2), 16);
         } else {
             if ((await this.approveToSpendToken({nftId: data.nftId})).tx.status) {
-                return await this.sellOrder({nftId: data.nftId, price: data.price});
+                const sellReceipt = await this.sellOrder({nftId: data.nftId, price: data.price});
+                return parseInt(sellReceipt.tx.logs[sellReceipt.tx.logs.length - 1].topics[3].substring(2), 16);
             }
         }
     }
@@ -55,7 +57,7 @@ export default class Core {
         const txResponse = await this.contract.sell(data.nftId, data.price);
         const txReceipt = await txResponse.wait();
 
-        return {tx: txReceipt.transactionHash};
+        return {tx: txReceipt};
     }
   async buy(lot_id, price){
         
