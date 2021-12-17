@@ -8,6 +8,10 @@ i {
     line-height: inherit;
     color: inherit;
 }
+i + span,
+span + i {
+    margin-left: 10px;
+}
 body {
     background-color: #232833;
     background-image: url(../images/background.webp);
@@ -389,4 +393,25 @@ header .btn.btn-connect.connected i {
 }
 .btn-modal-close:hover i {
     color: rgba(255, 70, 45, 1);
+}
+
+.card .date {
+    margin-top: 12px;
+    background: #3a4152;
+    width: fit-content;
+    color: rgba(255, 255, 255, 0.56);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.card .date i {
+    font-size: 18px;
+}
+.card .date i + span {
+    margin-left: 6px;
 }
