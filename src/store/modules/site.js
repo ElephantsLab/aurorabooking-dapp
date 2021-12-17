@@ -105,7 +105,7 @@ export default {
                         tableOrdered.push(order.table_number);
                     }
                 }
-                console.log(tableOrdered)
+                // console.log(tableOrdered)
                 return tableOrdered;
               } catch (error) {
                 console.log(error);
