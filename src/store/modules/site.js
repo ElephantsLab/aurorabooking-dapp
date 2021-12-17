@@ -10,7 +10,8 @@ export default {
         modalSellData: {},
         userOrders: [],
         orderDetails: {},
-        activeLots:[]
+        activeLots:[],
+        userQrs: []
     },
     actions: {
         async connectWallet(ctx) {
@@ -110,6 +111,19 @@ export default {
                 console.log(error);
             }
         },
+        async getUserQrCodes(ctx, data){
+            const result = [];
+            try {
+                for(let book of data){
+                    const res = await axios.get(`${config.baseURL}/getQrText/${book.nftId}`)
+                    result.push(res.data)
+                }
+                ctx.commit("updateUserQrList", result);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
         async deletePurchasedLot(ctx, data) {
             try {
                 await axios.delete(`${config.baseURL}/deleteLot`, {
@@ -123,6 +137,9 @@ export default {
         }
     },
     mutations: {
+        updateUserQrList(state, data){
+            state.userQrs = data
+        },
         updateUserData(state, data) {
             state.userData = data;
         },
@@ -149,6 +166,9 @@ export default {
         }
     },
     getters: {
+        getUserQrList(state){
+            return state.userQrs;
+        },
         userDataGetter(state) {
             return state.userData;
         },
