@@ -1,24 +1,39 @@
 <template>
   <transition name="modal">
-    <div class="modal-mask">
+    <div class="modal">
       <div class="modal-wrapper">
         <div class="modal-container">
-
           <div class="modal-header">
-            <slot name="header">{{ modalBookDataToProcessGetter.NAME }}</slot>
+            <div>
+              <slot name="header">{{ modalBookDataToProcessGetter.NAME }}</slot>
+            </div>
+            <button class="btn-modal-close" v-on:click="updateIsOpenBookModal(false)">
+              <i class="i-close-line"></i>
+            </button>
           </div>
 
           <div class="modal-body">
             <slot name="body">
               <table>
-                <tr><h2>Date</h2>
-                  <input type="date" id="start" name="trip-start"
-                         value="2021-12-17"
-                         min="2021-12-17" max="2023-12-31"
-                  v-model="bookDate">
+                <tr>
+                  <h2>Date</h2>
+                  <input
+                    type="date"
+                    id="start"
+                    name="trip-start"
+                    value="2021-12-17"
+                    min="2021-12-17"
+                    max="2023-12-31"
+                    v-model="bookDate"
+                  />
                 </tr>
-                <tr><h2>Table</h2>
-                  <td v-for="table in availableTables" v-on:click="chooseTable(table)" v-bind:key="table">
+                <tr>
+                  <h2>Table</h2>
+                  <td
+                    v-for="table in availableTables"
+                    v-on:click="chooseTable(table)"
+                    v-bind:key="table"
+                  >
                     <button>{{ table }}</button>
                   </td>
                 </tr>
@@ -29,12 +44,15 @@
           <div class="modal-footer">
             <slot name="footer">
               {{ bookDateRes }}
-              <button class="modal-default-button" v-on:click="bookPlaceTable">
+              <button class="modal-btn modal-btn-border btn" v-on:click="bookPlaceTable">
                 Book
               </button>
-              <button class="modal-default-button" v-on:click="updateIsOpenBookModal(false)">
+              <!-- <button
+                class="modal-btn modal-btn-border btn"
+                v-on:click="updateIsOpenBookModal(false)"
+              >
                 Close
-              </button>
+              </button> -->
             </slot>
           </div>
         </div>
@@ -50,32 +68,44 @@ export default {
   data() {
     return {
       chosenTableNumber: null,
-      bookDate: new Date().toISOString().split('T')[0],
-      availableTables: []
-    }
+      bookDate: new Date().toISOString().split("T")[0],
+      availableTables: [],
+    };
   },
   methods: {
     ...mapMutations(["updateIsOpenBookModal"]),
     ...mapActions(["bookTableSaveData", "fetchActiveOrders"]),
     async bookPlaceTable() {
       if (this.chosenTableNumber) {
-        const bookTableWriteRes = await this.$root.core.bookTable({placeId: this.modalBookDataToProcessGetter.ID, tableId: this.chosenTableNumber});
-        this.bookTableSaveData({ placeId: this.modalBookDataToProcessGetter.ID, table: this.chosenTableNumber, nftId: bookTableWriteRes.nftId, date: this.bookDateRes });
+        const bookTableWriteRes = await this.$root.core.bookTable({
+          placeId: this.modalBookDataToProcessGetter.ID,
+          tableId: this.chosenTableNumber,
+        });
+        this.bookTableSaveData({
+          placeId: this.modalBookDataToProcessGetter.ID,
+          table: this.chosenTableNumber,
+          nftId: bookTableWriteRes.nftId,
+          date: this.bookDateRes,
+        });
       }
     },
     chooseTable(number) {
       this.chosenTableNumber = number;
     },
     async updateTableStatus() {
-      const usedTables = await this.fetchActiveOrders({ placeId: this.modalBookDataToProcessGetter.ID });
-      this.availableTables = this.availableTables.filter(el => !usedTables.includes(el));
-    }
+      const usedTables = await this.fetchActiveOrders({
+        placeId: this.modalBookDataToProcessGetter.ID,
+      });
+      this.availableTables = this.availableTables.filter(
+        (el) => !usedTables.includes(el)
+      );
+    },
   },
   computed: {
     ...mapGetters(["modalBookDataToProcessGetter"]),
     bookDateRes() {
       return ~~(new Date(this.bookDate).getTime() / 1000);
-    }
+    },
   },
   async mounted() {
     for (let i = 0; i < this.modalBookDataToProcessGetter.TABLES; i++) {
@@ -85,12 +115,12 @@ export default {
     setInterval(async () => {
       await this.updateTableStatus();
     }, 2000);
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-.modal-mask {
+/* .modal-mask {
   position: fixed;
   z-index: 9998;
   top: 0;
@@ -121,5 +151,5 @@ export default {
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;
-}
+} */
 </style>
