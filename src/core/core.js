@@ -2,7 +2,7 @@ import {ethers} from "ethers";
 const contractAddress = "0x8Dc36fB73063Cfa9d18767522b2145A9ca9DF6F9";
 const NODE = "https://mainnet.aurora.dev";
 import abi from "./contractAbi.json";
-import axios from "axios";
+// import axios from "axios";
 
 export default class Core {
     constructor(context) {

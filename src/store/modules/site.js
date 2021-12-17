@@ -7,7 +7,8 @@ export default {
         isBookModalOpen: false,
         modalBookDataToProcess: {},
         isSellModalOpen: false,
-        modalSellData: {}
+        modalSellData: {},
+        userOrders: []
     },
     actions: {
         async connectWallet(ctx) {
@@ -32,6 +33,24 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+        async fetchUserOrders(ctx, data) {
+            try {
+                const userOrdersResponse = await axios.get(`${config.baseURL}/getUserOrders?address=${data.address}`);
+                const finalResArr = [];
+                for (let order of userOrdersResponse.data) {
+                    const placeId = order.place_id;
+                    const nftId = order.nft_id;
+                    const tableNumber = order.table_number;
+                    const date = order.date;
+
+                    finalResArr.push({placeId, nftId, tableNumber, date});
+                }
+
+                ctx.commit("updateUserOrders", finalResArr);
+            } catch (error) {
+                console.log(error);
+            }
         }
     },
     mutations: {
@@ -49,6 +68,9 @@ export default {
         },
         updateModalSellDataToProcess(state, data) {
             state.modalSellData = data;
+        },
+        updateUserOrders(state, data) {
+            state.userOrders = data;
         }
     },
     getters: {
@@ -66,6 +88,9 @@ export default {
         },
         modalSellDataToProcessGetter(state) {
             return state.modalSellData;
+        },
+        getUserOrders(state) {
+            return state.userOrders;
         }
     }
 }
