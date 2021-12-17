@@ -32,7 +32,66 @@
     <div class="container-content">
       <div class="container">
         <div class="wrapper-marketplace">
-          <div class="filter"></div>
+          <div class="filter">
+            <div class="filter-container">
+              <div class="filter-section">
+                <div class="filter-section-header">
+                  <span>Filter title </span>
+                  <i class="i-arrow-drop-down-line"></i>
+                </div>
+                <div class="filter-section-content">
+                  <div class="checkbox">
+                    <input type="checkbox" id="item1" />
+                    <label for="item1">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item2" />
+                    <label for="item2">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item3" />
+                    <label for="item3">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item4" />
+                    <label for="item4">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item5" />
+                    <label for="item5">Name </label>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-section">
+                <div class="filter-section-header">
+                  <span>Filter title </span>
+                  <i class="i-arrow-drop-down-line"></i>
+                </div>
+                <div class="filter-section-content">
+                  <div class="checkbox">
+                    <input type="checkbox" id="item1" />
+                    <label for="item1">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item2" />
+                    <label for="item2">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item3" />
+                    <label for="item3">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item4" />
+                    <label for="item4">Name </label>
+                  </div>
+                  <div class="checkbox">
+                    <input type="checkbox" id="item5" />
+                    <label for="item5">Name </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="wrapper-cards">
             <div
               class="card card-marketplace"
@@ -62,9 +121,17 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button  class="btn card-btn card-btn-border" @click="purchaseOrder(activeLot)">
+              <!--  
+               <button class="btn card-btn card-btn-border">
                   <i class="i-shopping-cart-2-line"></i>
-                  <span>Purchase lot</span>
+                  <span>Buy</span>
+                </button>
+                -->
+                
+                <button class="btn card-btn card-btn-border" 
+                  @click="purchaseOrder(activeLot)">
+                   <i class="i-shopping-cart-2-line"></i>
+                  Purchase lot
                 </button>
               </div>
             </div>
