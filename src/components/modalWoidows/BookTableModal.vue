@@ -12,7 +12,10 @@
             <slot name="body">
               <table>
                 <tr><h2>Date</h2>
-                  ...
+                  <input type="date" id="start" name="trip-start"
+                         value="2021-12-17"
+                         min="2021-12-17" max="2023-12-31"
+                  v-model="bookDate">
                 </tr>
                 <tr><h2>Table</h2>
                   <td v-for="table in modalBookDataToProcessGetter.TABLES" v-on:click="chooseTable(table)" v-bind:key="table">
@@ -25,6 +28,7 @@
 
           <div class="modal-footer">
             <slot name="footer">
+              {{ bookDateRes }}
               <button class="modal-default-button" v-on:click="bookPlaceTable">
                 Book
               </button>
@@ -45,12 +49,13 @@ import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      chosenTableNumber: null
+      chosenTableNumber: null,
+      bookDate: 0
     }
   },
   methods: {
     ...mapMutations(["updateIsOpenBookModal"]),
-    ...mapActions(["bookTableSaveData"]),
+    ...mapActions(["bookTableSaveData", "fetchActiveOrders"]),
     async bookPlaceTable() {
       if (this.chosenTableNumber) {
         const bookTableWriteRes = await this.$root.core.bookTable({placeId: this.modalBookDataToProcessGetter.ID, tableId: this.chosenTableNumber});
@@ -61,7 +66,15 @@ export default {
       this.chosenTableNumber = number;
     }
   },
-  computed: mapGetters(["modalBookDataToProcessGetter"]),
+  computed: {
+    ...mapGetters(["modalBookDataToProcessGetter"]),
+    bookDateRes() {
+      return new Date(this.bookDate);
+    }
+  },
+  mounted() {
+    this.fetchActiveOrders({ placeId: this.modalBookDataToProcessGetter.ID });
+  }
 }
 </script>
 

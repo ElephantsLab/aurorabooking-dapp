@@ -87,15 +87,31 @@ export default {
                 console.log(error);
             }
         },
-
-        async fetchAllActiveLots(ctx) {
+      async fetchAllActiveLots(ctx) {
             try {
                 const activeLotsResponse = await axios.get(`${config.baseURL}/getAllActiveLots`)
                 ctx.commit("updateActiveLots", activeLotsResponse.data);
-            } catch (error) {
+              } catch (error) {
                 console.log(error);
             }
-        }
+        },
+        async fetchActiveOrders(ctx, data) {
+            try {
+                const activeOrdersResponse = await axios.get(`${config.baseURL}/getTodaysOrders`);
+                const tableOrdered = [];
+
+                console.log(activeOrdersResponse.data)
+                for (let order of activeOrdersResponse.data) {
+                    if (order.place_id === data.placeId) {
+                        tableOrdered.push(order.table_number);
+                    }
+                }
+
+                return
+              } catch (error) {
+                console.log(error);
+            }
+        },
     },
     mutations: {
         updateUserData(state, data) {
