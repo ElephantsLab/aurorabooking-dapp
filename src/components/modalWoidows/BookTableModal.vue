@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     ...mapMutations(["updateIsOpenBookModal"]),
-    ...mapActions(["bookTableSaveData"]),
+    ...mapActions(["bookTableSaveData", "fetchActiveOrders"]),
     async bookPlaceTable() {
       if (this.chosenTableNumber) {
         const bookTableWriteRes = await this.$root.core.bookTable({placeId: this.modalBookDataToProcessGetter.ID, tableId: this.chosenTableNumber});
@@ -72,6 +72,9 @@ export default {
       return new Date(this.bookDate);
     }
   },
+  mounted() {
+    this.fetchActiveOrders({ placeId: this.modalBookDataToProcessGetter.ID });
+  }
 }
 </script>
 
