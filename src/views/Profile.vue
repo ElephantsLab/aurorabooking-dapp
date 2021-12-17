@@ -48,13 +48,14 @@ export default {
       }
     }
   },
+ 
   mounted() {
     this.updateProfileData();
-    this.getUserQrCodes(this.getUserOrders)
+    
     setInterval(() => {
       this.updateProfileData();
-      this.getUserQrCodes(this.getUserOrders)
-    }, 10000);
+
+    }, 2000);
   }
 }
 </script>

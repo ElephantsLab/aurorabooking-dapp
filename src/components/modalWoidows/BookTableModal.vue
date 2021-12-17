@@ -43,7 +43,7 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              {{ bookDateRes }}
+            {{ bookDateRes }}
               <button class="modal-btn modal-btn-border btn" v-on:click="bookPlaceTable">
                 Book
               </button>
@@ -92,14 +92,10 @@ export default {
     chooseTable(number) {
       this.chosenTableNumber = number;
     },
-    async updateTableStatus() {
-      const usedTables = await this.fetchActiveOrders({
-        placeId: this.modalBookDataToProcessGetter.ID,
-      });
-      this.availableTables = this.availableTables.filter(
-        (el) => !usedTables.includes(el)
-      );
-    },
+    async updateTableStatus(date) {
+      const usedTables = await this.fetchActiveOrders({ placeId: this.modalBookDataToProcessGetter.ID, date: date });
+      this.availableTables = this.availableTables.filter(el => !usedTables.includes(el));
+    }
   },
   computed: {
     ...mapGetters(["modalBookDataToProcessGetter"]),
@@ -111,9 +107,9 @@ export default {
     for (let i = 0; i < this.modalBookDataToProcessGetter.TABLES; i++) {
       this.availableTables.push(i + 1);
     }
-    await this.updateTableStatus();
+    await this.updateTableStatus(~~(new Date(this.bookDate).getTime()/1000));
     setInterval(async () => {
-      await this.updateTableStatus();
+      await this.updateTableStatus(~~(new Date(this.bookDate).getTime()/1000));
     }, 2000);
   },
 };

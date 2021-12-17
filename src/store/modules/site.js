@@ -63,7 +63,7 @@ export default {
 
                     finalResArr.push({placeId, nftId, tableNumber, date, orderId});
                 }
-
+                ctx.dispatch("getUserQrCodes", finalResArr)
                 ctx.commit("updateUserOrders", finalResArr);
             } catch (error) {
                 console.log(error);
@@ -79,7 +79,7 @@ export default {
 
                 const attributesArrRes = [];
                 for (let attribute of attributes) {
-                    attributesArrRes.push({value: attribute.value, type: attribute.trait_type});
+                    attributesArrRes.push({ trait_type: attribute.trait_type, value: attribute.value,});
                 }
 
                 ctx.commit("updateOrderDetails", {image, name, description, attributesArrRes});
@@ -97,7 +97,7 @@ export default {
         },
         async fetchActiveOrders(ctx, data) {
             try {
-                const activeOrdersResponse = await axios.get(`${config.baseURL}/getTodaysOrders`);
+                const activeOrdersResponse = await axios.get(`${config.baseURL}/getTodaysOrders?date=${data.date}`);
                 const tableOrdered = [];
 
                 for (let order of activeOrdersResponse.data) {
@@ -105,7 +105,7 @@ export default {
                         tableOrdered.push(order.table_number);
                     }
                 }
-
+                console.log(tableOrdered)
                 return tableOrdered;
               } catch (error) {
                 console.log(error);
