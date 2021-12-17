@@ -62,8 +62,8 @@ export default class Core {
   async buy(lot_id, price){
         
         const txResponse = await this.contract.buy(lot_id, {value: ethers.utils.parseUnits(price)});
-        const txReceipt = await txResponse.wait();
 
-        return txReceipt;
+
+        return txResponse;
     }
 }
