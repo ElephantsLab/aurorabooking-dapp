@@ -10,6 +10,7 @@
 
           <div class="modal-body">
             <slot name="body">
+              <input type="number" v-model="sellPrice">
               <table>
 
               </table>
@@ -18,7 +19,7 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="modal-default-button">
+              <button class="modal-default-button" v-on:click="sellToken(modalSellDataToProcessGetter)">
                 Sell
               </button>
               <button class="modal-default-button" v-on:click="updateIsOpenSellModal(false)">
@@ -33,10 +34,22 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 
 export default {
-  methods: mapMutations(["updateIsOpenSellModal"]),
+  data() {
+    return {
+      sellPrice: 0
+    }
+  },
+  methods: {
+    ...mapMutations(["updateIsOpenSellModal"]),
+    ...mapActions(["setNewLot"]),
+    async sellToken(sellData) {
+      await this.$root.core.getTokenAllowance({ nftId: sellData.nftId, price: this.sellPrice });
+      await this.setNewLot({ orderId: sellData.orderId, price: this.sellPrice });
+    }
+  },
   computed: mapGetters(["modalSellDataToProcessGetter"])
 }
 </script>

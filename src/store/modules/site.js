@@ -35,17 +35,32 @@ export default {
                 console.log(error);
             }
         },
+        async setNewLot(ctx, data) {
+            try {
+                const timestamp = Math.floor(new Date().getTime() / 1000);
+                console.log(data)
+                await axios.post(`${config.baseURL}/setNewLot`, {
+                    id: data.orderId,
+                    price: data.price,
+                    date: timestamp
+                });
+                console.log(true);
+            } catch (error) {
+                console.log(error);
+            }
+        },
         async fetchUserOrders(ctx, data) {
             try {
                 const userOrdersResponse = await axios.get(`${config.baseURL}/getUserOrders?address=${data.address}`);
                 const finalResArr = [];
                 for (let order of userOrdersResponse.data) {
+                    const orderId = order.id;
                     const placeId = order.place_id;
                     const nftId = order.nft_id;
                     const tableNumber = order.table_number;
                     const date = order.date;
 
-                    finalResArr.push({placeId, nftId, tableNumber, date});
+                    finalResArr.push({placeId, nftId, tableNumber, date, orderId});
                 }
 
                 ctx.commit("updateUserOrders", finalResArr);

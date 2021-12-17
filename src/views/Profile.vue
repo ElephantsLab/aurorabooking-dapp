@@ -37,7 +37,7 @@ export default {
     },
     openSellModal(sellData) {
       this.updateIsOpenSellModal(true);
-      this.updateModalSellDataToProcess({placeName: this.getPlaceName(sellData.placeId), placeId: sellData.placeId, nftId: sellData.nftId, tableNumber: sellData.tableNumber, date: sellData.date});
+      this.updateModalSellDataToProcess({placeName: this.getPlaceName(sellData.placeId), placeId: sellData.placeId, nftId: sellData.nftId, tableNumber: sellData.tableNumber, date: sellData.date, orderId: sellData.orderId});
     }
   },
   mounted() {
