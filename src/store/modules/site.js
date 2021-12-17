@@ -23,7 +23,7 @@ export default {
         },
         async bookTableSaveData(ctx, data) {
             try {
-                const currentTimestamp = ~~(new Date().getTime()/1000);
+              const currentTimestamp = ~~(new Date().getTime()/1000);
                 await axios.post(`${config.baseURL}/setNewBooking`, {
                     nft_id: data.nftId,
                     place_id: data.placeId,

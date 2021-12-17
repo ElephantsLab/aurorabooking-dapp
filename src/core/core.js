@@ -1,3 +1,4 @@
+import axios from "axios";
 import {ethers} from "ethers";
 const contractAddress = "0x8Dc36fB73063Cfa9d18767522b2145A9ca9DF6F9";
 // const nftContractAddress = "0x8588e2E8C3258BCef70e17dB88c0485Ce312E68E";
@@ -10,6 +11,7 @@ export default class Core {
     constructor(context) {
         this.context = context;
         this.init();
+        this.baseURL = config.baseURL;
     }
 
     async init() {
@@ -30,7 +32,7 @@ export default class Core {
 
         return {tx: txReceipt, response: txResponse, nftId: eventLogs};
     }
-
+  
     // async getTokenAllowance(data) {
     //     // const token
     // }
