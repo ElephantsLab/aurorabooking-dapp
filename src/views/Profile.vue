@@ -50,7 +50,7 @@ export default {
   },
   mounted() {
     this.updateProfileData();
-    
+    this.getUserQrCodes(this.getUserOrders)
     setInterval(() => {
       this.updateProfileData();
       this.getUserQrCodes(this.getUserOrders)
