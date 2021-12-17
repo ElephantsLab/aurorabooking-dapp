@@ -16,14 +16,14 @@
           >
             <div class="card-header">
               <!-- One / two / three / four / five -->
-              <div class="card-stars three" >
+              <div class="card-stars three" v-bind:class="getPlaceStars(order.placeId)">
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>
               </div>
-               <img @click='openSellModal(order)' src="@/assets/images/cardImage1.png" alt="" />       
+               <img @click='openSellModal(order)' v-bind:src="getPlaceImage(order.placeId)" alt="" />
             </div>
             <div class="card-content">
               <a href="" class="card-name"> {{getPlaceName(order.placeId)}} </a>
@@ -95,10 +95,14 @@ export default {
       "updateModalSellDataToProcess",
     ]),
     ...mapActions(["fetchUserOrders", "getUserQrCodes"]),
-    getPlaceName(placeId) {
-      for (let place of config.RESTAURANTS) {
-        if (place.ID === placeId) return place.NAME;
-      }
+    getPlaceName(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).NAME;
+    },
+    getPlaceImage(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).IMG;
+    },
+    getPlaceStars(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).STARS;
     },
     openSellModal(sellData) {
       this.updateIsOpenSellModal(true);
