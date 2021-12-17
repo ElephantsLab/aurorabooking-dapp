@@ -24,7 +24,8 @@
     <div class="container">
       <div class="section-title">Marketplace</div>
       <div class="section-row">
-        <div>{{ getActiveLots.length }}</div>
+        <div v-if="getActiveLots.length">{{ getActiveLots.length }}</div>
+        <div v-else>there are no active lots</div>
         <!-- <div></div> -->
       </div>
     </div>
@@ -120,8 +121,7 @@
                 </div>
               </div>
               <div class="card-footer">
-
-               <!--  
+              <!--  
                <button class="btn card-btn card-btn-border">
                   <i class="i-shopping-cart-2-line"></i>
                   <span>Buy</span>
@@ -133,7 +133,6 @@
                    <i class="i-shopping-cart-2-line"></i>
                   Purchase lot
                 </button>
-
               </div>
             </div>
           </div>
@@ -153,7 +152,7 @@ export default {
     ...mapGetters(["getActiveLots"]),
   },
   methods: {
-    ...mapMutations(["updateSuccessMessage", "updatePendingMessage", "updateFailMessage"]),
+    ...mapMutations(["updateSuccessMessage", "updatePendingMessage", "updateFailMessage", "updateIsOpenTransactionModal"]),
     ...mapActions(["fetchAllActiveLots", "deletePurchasedLot"]),
     getPlaceName(place_id) {
       return config.RESTAURANTS.find((el) => el.ID === place_id).NAME;
@@ -182,6 +181,7 @@ export default {
         this.updateSuccessMessage(false);
         this.updateSuccessMessage(false);
       }
+      this.updateIsOpenTransactionModal(true);
     },
   },
   created() {
