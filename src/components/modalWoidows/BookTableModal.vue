@@ -59,7 +59,7 @@ export default {
     async bookPlaceTable() {
       if (this.chosenTableNumber) {
         const bookTableWriteRes = await this.$root.core.bookTable({placeId: this.modalBookDataToProcessGetter.ID, tableId: this.chosenTableNumber});
-        this.bookTableSaveData({ placeId: this.modalBookDataToProcessGetter.ID, table: this.chosenTableNumber, nftId: bookTableWriteRes.nftId });
+        this.bookTableSaveData({ placeId: this.modalBookDataToProcessGetter.ID, table: this.chosenTableNumber, nftId: bookTableWriteRes.nftId, date: this.bookDateRes });
       }
     },
     chooseTable(number) {
@@ -69,7 +69,7 @@ export default {
   computed: {
     ...mapGetters(["modalBookDataToProcessGetter"]),
     bookDateRes() {
-      return new Date(this.bookDate);
+      return ~~(new Date(this.bookDate).getTime() / 1000);
     }
   },
   mounted() {

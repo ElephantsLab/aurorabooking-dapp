@@ -46,8 +46,8 @@ export default {
     ...mapMutations(["updateIsOpenSellModal"]),
     ...mapActions(["setNewLot"]),
     async sellToken(sellData) {
-      await this.$root.core.getTokenAllowance({ nftId: sellData.nftId, price: this.sellPrice });
-      await this.setNewLot({ orderId: sellData.orderId, price: this.sellPrice });
+      const lotId = await this.$root.core.getTokenAllowance({ nftId: sellData.nftId, price: this.sellPrice })
+      await this.setNewLot({ orderId: sellData.orderId, price: this.sellPrice, lotId: lotId });
     }
   },
   computed: mapGetters(["modalSellDataToProcessGetter"])
