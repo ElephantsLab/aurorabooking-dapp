@@ -14,11 +14,10 @@
             class="card card-booking"
             v-for="(restaurant, index) in config.RESTAURANTS"
             v-bind:key="index"
-            v-on:click="openBookModal(restaurant)"
           >
             <div class="card-header">
               <!-- One / two / three / four / five -->
-              <div class="card-stars three">
+              <div class="card-stars three" v-bind:class="restaurant.STARS">
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>
@@ -30,13 +29,13 @@
             <div class="card-content">
               <a href="" class="card-name">{{ restaurant.NAME }}</a>
               <div class="card-describe">
-                <span>Kiyv</span> 
-                <span>$$$$</span>
-                <span>Asian cuisine</span>
+                <span>{{ restaurant.TOWN }}</span>
+<!--                <span>$$$$</span>-->
+<!--                <span></span>-->
               </div>
             </div>
             <div class="card-footer">
-              <button  class="btn card-btn card-btn-border">
+              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(restaurant)">
                 Booking
               </button>
             </div>
@@ -44,18 +43,6 @@
         </div>
       </div>
     </div>
-    <table>
-      <tr
-        v-for="(restaurant, index) in config.RESTAURANTS"
-        v-bind:key="index"
-        v-on:click="openBookModal(restaurant)"
-      >
-        <td>
-          <h4>{{ restaurant.NAME }}</h4>
-        </td>
-        <td><img class="restaurant" v-bind:src="restaurant.IMG" /></td>
-      </tr>
-    </table>
   </div>
 </template>
 
