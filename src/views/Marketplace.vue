@@ -72,28 +72,16 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 import config from "../assets/config.json";
-import TransactionStatus from "../components/modalWoidows/TransactionStatus.vue";
 export default {
   name: "Marketplace",
-  components: {
-    TransactionStatus,
-  },
-  data() {
-    return {
-      config: config,
-      showSuccessMessage: false,
-      showPendingMessage: false,
-      showFailMessage: false,
-    };
-  },
-
   computed: {
     ...mapState(["activeLots"]),
     ...mapGetters(["getActiveLots"]),
   },
   methods: {
+    ...mapMutations(["updateSuccessMessage", "updatePendingMessage", "updateFailMessage"]),
     ...mapActions(["fetchAllActiveLots", "deletePurchasedLot"]),
     getPlaceName(place_id) {
       return config.RESTAURANTS.find((el) => el.ID === place_id).NAME;
@@ -110,17 +98,17 @@ export default {
     async purchaseOrder(lot) {
       try {
         const rawRes = await this.$root.core.buy(lot.lot_id, lot.price);
-        this.showPendingMessage = true;
+        this.updateSuccessMessage(true);
         const res = await rawRes.wait();
         if (res.transactionHash) {
-          this.showPendingMessage = false;
-          this.showSuccessMessage = true;
+          this.updatePendingMessage(false);
+          this.updateSuccessMessage(false);
           await this.deletePurchasedLot({ lotId: lot.lot_id });
         }
       } catch (error) {
-        this.showFailMessage = true;
-        this.showSuccessMessage = false;
-        this.showPendingMessage = false;
+        this.updateFailMessage(true);
+        this.updateSuccessMessage(false);
+        this.updateSuccessMessage(false);
       }
     },
   },

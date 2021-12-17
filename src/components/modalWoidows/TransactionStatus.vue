@@ -7,7 +7,7 @@
             <slot name="header">
                 Transaction Status
             </slot>
-            <button @click="emits='close'" class="btn-modal-close" v-on:click="updateIsOpenSellModal(false)">
+            <button @click="emits='close'" class="btn-modal-close" v-on:click="updateIsOpenTransactionModal(false)">
                <i class="i-close-line"></i>
             </button>
           </div>
@@ -32,7 +32,10 @@
 
 </template>
 <script>
+import { mapMutations } from "vuex";
+
 export default{
-    props: ['showSuccess', "showPending", "showFail"]
+    props: ['showSuccess', "showPending", "showFail"],
+  methods: mapMutations(["updateIsOpenTransactionModal"])
 }
 </script>
