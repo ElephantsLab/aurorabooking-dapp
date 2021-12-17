@@ -41,7 +41,7 @@ computed: {
   
 },
 methods: {
-  ...mapActions(["fetchAllActiveLots"]),
+  ...mapActions(["fetchAllActiveLots", "deletePurchasedLot"]),
   getPlaceName(place_id){
     return config.RESTAURANTS.find(el => el.ID === place_id).NAME;
   },
@@ -53,6 +53,7 @@ methods: {
       if(res.transactionHash){
         this.showPendingMessage = false
         this.showSuccessMessage = true
+        await this.deletePurchasedLot({lotId: lot.lot_id});
       }
     } catch (error) {
         this.showFailMessage = true;

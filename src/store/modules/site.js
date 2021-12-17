@@ -25,14 +25,14 @@ export default {
         },
         async bookTableSaveData(ctx, data) {
             try {
-              // const currentTimestamp = ~~(new Date().getTime()/1000);
+              const currentTimestamp = ~~(new Date().getTime()/1000);
                 await axios.post(`${config.baseURL}/setNewBooking`, {
                     nft_id: data.nftId,
                     place_id: data.placeId,
                     table_number: data.table,
-                    date: data.date
+                    date: currentTimestamp
                 });
-                console.log(true)
+                // date.data
             } catch (error) {
                 console.log(error);
             }
@@ -40,14 +40,12 @@ export default {
         async setNewLot(ctx, data) {
             try {
                 const timestamp = Math.floor(new Date().getTime() / 1000);
-                console.log(data)
                 await axios.post(`${config.baseURL}/setNewLot`, {
                     id: data.orderId,
                     price: data.price,
                     date: timestamp,
                     lot_id: data.lotId
                 });
-                console.log(true);
             } catch (error) {
                 console.log(error);
             }
@@ -102,7 +100,6 @@ export default {
                 const activeOrdersResponse = await axios.get(`${config.baseURL}/getTodaysOrders`);
                 const tableOrdered = [];
 
-                console.log(activeOrdersResponse.data)
                 for (let order of activeOrdersResponse.data) {
                     if (order.place_id === data.placeId) {
                         tableOrdered.push(order.table_number);
@@ -122,6 +119,18 @@ export default {
                     result.push(res.data)
                 }
                 ctx.commit("updateUserQrList", result);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async deletePurchasedLot(ctx, data) {
+            try {
+                await axios.delete(`${config.baseURL}/deleteLot`, {
+                    data: {
+                        lot_id: data.lotId
+                    }
+                });
             } catch (error) {
                 console.log(error);
             }
