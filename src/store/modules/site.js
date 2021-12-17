@@ -63,7 +63,7 @@ export default {
 
                     finalResArr.push({placeId, nftId, tableNumber, date, orderId});
                 }
-
+                ctx.dispatch("getUserQrCodes", finalResArr)
                 ctx.commit("updateUserOrders", finalResArr);
             } catch (error) {
                 console.log(error);
