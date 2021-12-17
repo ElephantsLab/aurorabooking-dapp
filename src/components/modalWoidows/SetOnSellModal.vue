@@ -12,16 +12,12 @@
                <i class="i-close-line"></i>
             </button>
           </div>
-
+          <h2>Enter price</h2>
           <div class="modal-body">
             <slot name="body">
-              <input type="number" v-model="sellPrice">
-              <table>
-
-              </table>
+              <input type="number" placeholder="Enter price" v-model="sellPrice">
             </slot>
           </div>
-
           <div class="modal-footer">
             <slot name="footer">
               <button class="modal-btn-border modal-btn btn" v-on:click="sellToken(modalSellDataToProcessGetter)">
