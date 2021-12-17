@@ -16,7 +16,7 @@
           >
             <div class="card-header">
               <!-- One / two / three / four / five -->
-              <div class="card-stars three" >
+              <div class="card-stars stars-container three" >
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>

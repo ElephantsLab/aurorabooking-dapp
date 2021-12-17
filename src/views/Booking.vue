@@ -17,7 +17,7 @@
           >
             <div class="card-header">
               <!-- One / two / three / four / five -->
-              <div class="card-stars three" v-bind:class="restaurant.STARS">
+              <div class="card-stars stars-container three" v-bind:class="restaurant.STARS">
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>
