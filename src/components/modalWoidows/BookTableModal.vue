@@ -65,8 +65,8 @@ export default {
     chooseTable(number) {
       this.chosenTableNumber = number;
     },
-    async updateTableStatus() {
-      const usedTables = await this.fetchActiveOrders({ placeId: this.modalBookDataToProcessGetter.ID });
+    async updateTableStatus(date) {
+      const usedTables = await this.fetchActiveOrders({ placeId: this.modalBookDataToProcessGetter.ID, date: date });
       this.availableTables = this.availableTables.filter(el => !usedTables.includes(el));
     }
   },
@@ -80,9 +80,9 @@ export default {
     for (let i = 0; i < this.modalBookDataToProcessGetter.TABLES; i++) {
       this.availableTables.push(i + 1);
     }
-    await this.updateTableStatus();
+    await this.updateTableStatus(~~(new Date(this.bookDate).getTime()/1000));
     setInterval(async () => {
-      await this.updateTableStatus();
+      await this.updateTableStatus(~~(new Date(this.bookDate).getTime()/1000));
     }, 2000);
   }
 }
