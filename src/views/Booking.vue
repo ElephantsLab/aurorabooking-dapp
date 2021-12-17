@@ -35,7 +35,11 @@
                 <span>Asian cuisine</span>
               </div>
             </div>
-            <div class="card-footer"></div>
+            <div class="card-footer">
+              <button  class="btn card-btn card-btn-border">
+                Booking
+              </button>
+            </div>
           </div>
         </div>
       </div>
