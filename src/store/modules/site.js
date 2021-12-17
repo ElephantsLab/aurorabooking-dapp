@@ -9,7 +9,8 @@ export default {
         isSellModalOpen: false,
         modalSellData: {},
         userOrders: [],
-        orderDetails: {}
+        orderDetails: {},
+        activeLots:[]
     },
     actions: {
         async connectWallet(ctx) {
@@ -86,6 +87,14 @@ export default {
                 console.log(error);
             }
         },
+      async fetchAllActiveLots(ctx) {
+            try {
+                const activeLotsResponse = await axios.get(`${config.baseURL}/getAllActiveLots`)
+                ctx.commit("updateActiveLots", activeLotsResponse.data);
+              } catch (error) {
+                console.log(error);
+            }
+        },
         async fetchActiveOrders(ctx, data) {
             try {
                 const activeOrdersResponse = await axios.get(`${config.baseURL}/getTodaysOrders`);
@@ -99,10 +108,10 @@ export default {
                 }
 
                 return
-            } catch (error) {
+              } catch (error) {
                 console.log(error);
             }
-        }
+        },
     },
     mutations: {
         updateUserData(state, data) {
@@ -125,6 +134,9 @@ export default {
         },
         updateOrderDetails(state, data) {
             state.orderDetails = data;
+        },
+        updateActiveLots(state, data) {
+            state.activeLots = data;
         }
     },
     getters: {
@@ -148,6 +160,9 @@ export default {
         },
         getOrderDetails(state) {
             return state.orderDetails;
+        },
+        getActiveLots(state){
+            return state.activeLots;
         }
     }
 }
