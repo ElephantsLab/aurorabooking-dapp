@@ -27,12 +27,13 @@ computed: {
   
 },
 methods: {
-  ...mapActions(["fetchAllActiveLots"]),
+  ...mapActions(["fetchAllActiveLots", "deletePurchasedLot"]),
   getPlaceName(place_id){
     return config.RESTAURANTS.find(el => el.ID === place_id).NAME;
   },
   async purchaseOrder(lot){
-    await this.$root.core.buy(lot.lot_id, lot.price);
+    const purchaceRes = await this.$root.core.buy(lot.lot_id, lot.price);
+    if (purchaceRes.status) await this.deletePurchasedLot({lotId: lot.lot_id});
   }
   
 },

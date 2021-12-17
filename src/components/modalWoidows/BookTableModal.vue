@@ -18,7 +18,7 @@
                   v-model="bookDate">
                 </tr>
                 <tr><h2>Table</h2>
-                  <td v-for="table in modalBookDataToProcessGetter.TABLES" v-on:click="chooseTable(table)" v-bind:key="table">
+                  <td v-for="table in availableTables" v-on:click="chooseTable(table)" v-bind:key="table">
                     <button>{{ table }}</button>
                   </td>
                 </tr>
@@ -50,7 +50,8 @@ export default {
   data() {
     return {
       chosenTableNumber: null,
-      bookDate: 0
+      bookDate: 0,
+      availableTables: []
     }
   },
   methods: {
@@ -64,6 +65,10 @@ export default {
     },
     chooseTable(number) {
       this.chosenTableNumber = number;
+    },
+    async updateTableStatus() {
+      const usedTables = await this.fetchActiveOrders({ placeId: this.modalBookDataToProcessGetter.ID });
+      this.availableTables = this.availableTables.filter(el => !usedTables.includes(el));
     }
   },
   computed: {
@@ -72,8 +77,14 @@ export default {
       return ~~(new Date(this.bookDate).getTime() / 1000);
     }
   },
-  mounted() {
-    this.fetchActiveOrders({ placeId: this.modalBookDataToProcessGetter.ID });
+  async mounted() {
+    for (let i = 0; i < this.modalBookDataToProcessGetter.TABLES; i++) {
+      this.availableTables.push(i + 1);
+    }
+    await this.updateTableStatus();
+    setInterval(async () => {
+      await this.updateTableStatus();
+    }, 2000);
   }
 }
 </script>
