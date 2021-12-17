@@ -7,11 +7,16 @@ export default {
         isBookModalOpen: false,
         modalBookDataToProcess: {},
         isSellModalOpen: false,
+        isOpenTransactionModal: false,
         modalSellData: {},
         userOrders: [],
         orderDetails: {},
         activeLots:[],
-        userQrs: []
+        userQrs: [],
+
+        showSuccessMessage: false,
+        showPendingMessage: false,
+        showFailMessage: false
     },
     actions: {
         async connectWallet(ctx) {
@@ -89,7 +94,7 @@ export default {
         },
       async fetchAllActiveLots(ctx) {
             try {
-                const activeLotsResponse = await axios.get(`${config.baseURL}/getAllActiveLots`)
+                const activeLotsResponse = await axios.get(`${config.baseURL}/getAllActiveLots`);
                 ctx.commit("updateActiveLots", activeLotsResponse.data);
               } catch (error) {
                 console.log(error);
@@ -163,6 +168,18 @@ export default {
         },
         updateActiveLots(state, data) {
             state.activeLots = data;
+        },
+        updateSuccessMessage(state, data) {
+            state.showSuccessMessage = data;
+        },
+        updatePendingMessage(state, data) {
+            state.showPendingMessage = data;
+        },
+        updateFailMessage(state, data) {
+            state.showFailMessage = data;
+        },
+        updateIsOpenTransactionModal(state, data) {
+            state.isOpenTransactionModal = data;
         }
     },
     getters: {
@@ -192,6 +209,18 @@ export default {
         },
         getActiveLots(state){
             return state.activeLots;
+        },
+        getSuccessMessage(state) {
+            return state.showSuccessMessage;
+        },
+        getPendingMessage(state) {
+            return state.showPendingMessage;
+        },
+        getFailMessage(state) {
+            return state.showFailMessage;
+        },
+        getTransactionModalIsOpen(state) {
+            return state.isOpenTransactionModal;
         }
     }
 }

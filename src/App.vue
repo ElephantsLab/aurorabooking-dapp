@@ -4,6 +4,12 @@
     <BookTableModal v-if="isOpenBookModalGetter" />
     <SetOnSellModal v-if="isOpenSellModalGetter" />
     <router-view class="wrapper-main" />
+    <transaction-status
+        v-if="getTransactionModalIsOpen"
+        :showSuccess="getSuccessMessage"
+        :showPending="getPendingMessage"
+        :showFail="getFailMessage"
+    />
   </div>
 </template>
 
@@ -12,6 +18,7 @@ import Header from "./components/Header";
 import Core from "./core/core";
 import BookTableModal from "./components/modalWoidows/BookTableModal";
 import SetOnSellModal from "./components/modalWoidows/SetOnSellModal";
+import TransactionStatus from "./components/modalWoidows/TransactionStatus";
 import { mapGetters, mapActions} from "vuex";
 
 export default {
@@ -20,11 +27,16 @@ export default {
     SetOnSellModal,
     Header,
     BookTableModal,
+    TransactionStatus
   },
   computed: mapGetters([
     "isOpenBookModalGetter",
     "isOpenSellModalGetter",
     "userDataGetter",
+    "getSuccessMessage",
+    "getPendingMessage",
+    "getFailMessage",
+    "getTransactionModalIsOpen"
   ]),
   methods: {
     ...mapActions(['connectWallet'])

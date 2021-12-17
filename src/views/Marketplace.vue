@@ -1,30 +1,30 @@
 <template>
   <div>
     <!-- old -->
-    <div>
-      <div class="mainContent">
-        <div v-for="activeLot in getActiveLots" :key="activeLot.id">
-          <div>
-            <p>Restaurant: {{ getPlaceName(activeLot.place_id) }}</p>
-            <p>Table number: {{ activeLot.table_number }}</p>
-            <p>Order price: {{ activeLot.price }}</p>
-            <button @click="purchaseOrder(activeLot)">Purchase lot</button>
-          </div>
-        </div>
-      </div>
-      <transaction-status
-        :showSuccess="showSuccessMessage"
-        :showPending="showPendingMessage"
-        :showFail="showFailMessage"
-      />
-    </div>
+<!--    <div>-->
+<!--      <div class="mainContent">-->
+<!--        <div v-for="activeLot in getActiveLots" :key="activeLot.id">-->
+<!--          <div>-->
+<!--            <p>Restaurant: {{ getPlaceName(activeLot.place_id) }}</p>-->
+<!--            <p>Table number: {{ activeLot.table_number }}</p>-->
+<!--            <p>Order price: {{ activeLot.price }}</p>-->
+<!--            <button @click="purchaseOrder(activeLot)">Purchase lot</button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <transaction-status-->
+<!--        :showSuccess="showSuccessMessage"-->
+<!--        :showPending="showPendingMessage"-->
+<!--        :showFail="showFailMessage"-->
+<!--      />-->
+<!--    </div>-->
 
     <!-- new -->
 
     <div class="container">
       <div class="section-title">Marketplace</div>
       <div class="section-row">
-        <div>12 023 proposals</div>
+        <div>{{ getActiveLots.length }}</div>
         <!-- <div></div> -->
       </div>
     </div>
@@ -92,30 +92,48 @@
             </div>
           </div>
           <div class="wrapper-cards">
-            <div class="card card-marketplace">
+            <div
+              class="card card-marketplace"
+              v-for="activeLot in getActiveLots" :key="activeLot.id"
+            >
+            <!-- 
+                   v-for="(restaurant, index) in config.RESTAURANTS"
+              v-bind:key="index"
+              v-on:click="openBookModal(restaurant)"
+             -->
               <div class="card-header">
-                <div class="card-stars three">
+                <div class="card-stars three" v-bind:class="getPlaceStars(activeLot.place_id)">
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                   <i class="i-star-fill"> </i>
                 </div>
-                <img src="@/assets/images/cardImage2.png" alt="" />
+                <img src="@/assets/images/cardImage2.png" />
               </div>
               <div class="card-content">
-                <a href="" class="card-name">name</a>
+                <a href="" class="card-name">{{ getPlaceName(activeLot.place_id) }}</a>
                 <div class="card-describe">
-                  <span>Kiyv</span>
-                  <span>$$$$</span>
-                  <span>Asian cuisine</span>
+                  <span>{{ getPlaceTown(activeLot.place_id) }}</span>
+                  <span>{{ activeLot.price }} $</span>
+<!--                  <span>Asian cuisine</span>-->
                 </div>
               </div>
               <div class="card-footer">
-                <button class="btn card-btn card-btn-border">
+
+               <!--  
+               <button class="btn card-btn card-btn-border">
                   <i class="i-shopping-cart-2-line"></i>
                   <span>Buy</span>
                 </button>
+                -->
+                
+                <button class="btn card-btn card-btn-border" 
+                  @click="purchaseOrder(activeLot)">
+                   <i class="i-shopping-cart-2-line"></i>
+                  Purchase lot
+                </button>
+
               </div>
             </div>
           </div>
@@ -126,46 +144,43 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 import config from "../assets/config.json";
-import TransactionStatus from "../components/modalWoidows/TransactionStatus.vue";
 export default {
   name: "Marketplace",
-  components: {
-    TransactionStatus,
-  },
-  data() {
-    return {
-      config: config,
-      showSuccessMessage: false,
-      showPendingMessage: false,
-      showFailMessage: false,
-    };
-  },
-
   computed: {
     ...mapState(["activeLots"]),
     ...mapGetters(["getActiveLots"]),
   },
   methods: {
+    ...mapMutations(["updateSuccessMessage", "updatePendingMessage", "updateFailMessage"]),
     ...mapActions(["fetchAllActiveLots", "deletePurchasedLot"]),
     getPlaceName(place_id) {
       return config.RESTAURANTS.find((el) => el.ID === place_id).NAME;
     },
+    getPlaceStars(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).STARS;
+    },
+    getPlaceTown(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).TOWN;
+    },
+    getPlaceImage(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).IMG;
+    },
     async purchaseOrder(lot) {
       try {
         const rawRes = await this.$root.core.buy(lot.lot_id, lot.price);
-        this.showPendingMessage = true;
+        this.updateSuccessMessage(true);
         const res = await rawRes.wait();
         if (res.transactionHash) {
-          this.showPendingMessage = false;
-          this.showSuccessMessage = true;
+          this.updatePendingMessage(false);
+          this.updateSuccessMessage(false);
           await this.deletePurchasedLot({ lotId: lot.lot_id });
         }
       } catch (error) {
-        this.showFailMessage = true;
-        this.showSuccessMessage = false;
-        this.showPendingMessage = false;
+        this.updateFailMessage(true);
+        this.updateSuccessMessage(false);
+        this.updateSuccessMessage(false);
       }
     },
   },

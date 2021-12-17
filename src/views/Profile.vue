@@ -10,8 +10,8 @@
     <div class="container-content">
       <div class="container">
         <div class="wrapper-cards">
-          <div
-            class="card card-profile"
+          <div v-for="(order, index) in getUserOrders" :key="index" 
+            class="card card-profile "
 
           >
             <div class="card-header">
@@ -23,29 +23,30 @@
                 <i class="i-star-fill"> </i>
                 <i class="i-star-fill"> </i>
               </div>
-               <img  src="@/assets/images/cardImage1.png" alt="" />       
+               <img @click='openSellModal(order)' src="@/assets/images/cardImage1.png" alt="" />       
             </div>
             <div class="card-content">
-              <a href="" class="card-name"> restaurant.NAME </a>
+              <a href="" class="card-name"> {{getPlaceName(order.placeId)}} </a>
               <div class="card-describe">
-                <span> restaurant.TOWN</span>
+                <span> Table number:{{order.tableNumber }}</span>
 
               </div>
               <div class="date">
                 <i class="i-calendar-event-line"></i>
-                <span>12 December 2021</span>
+                <span>{{order.date.slice(0, 10)}}</span>
               </div>
+              <img :src="getUserQrList[index]" alt="">
             </div>
             <div class="card-footer">
-              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(restaurant)">
+              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(order)">
                 <i class="i-price-tag-2-line"></i>
                 <span>Sell</span>
               </button>
-              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(restaurant)">
+              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(order)">
                 <i class="i-arrow-left-right-line"></i>
                 <span>Transfer</span>
               </button>
-              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(restaurant)">
+              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(order)">
                 <i class="i-shopping-cart-2-line"></i>
                 <span>Buy</span>
               </button>
@@ -54,11 +55,7 @@
         </div>
       </div>
     </div>
-
-    <h3 v-if="userDataGetter.isConnected">Your address: {{ userDataGetter.address }}</h3>
-    <h3 v-else>Connect your wallet...</h3>
-    <div>
-      <!-- <h2>Yours books</h2> -->
+    <!-- <div>
       <table class="user-book" v-if="getUserOrders">
         <tr>
           <td v-for="(order, index) in getUserOrders" v-bind:key="index">
@@ -72,7 +69,7 @@
           </td>
         </tr>
       </table>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -81,6 +78,15 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "../assets/config.json";
 
 export default {
+  data(){
+    return{
+      orders: [{
+        tableNumber: 2,
+        nftId:0,
+        place_id:2
+      }]
+    }
+  },
   computed: mapGetters(["userDataGetter", "getUserOrders", "getUserQrList"]),
   methods: {
     ...mapMutations([
@@ -111,7 +117,7 @@ export default {
         this.updateUserData({ address: userAddress, isConnected: true });
         this.fetchUserOrders({ address: userAddress });
       }
-    },
+    }
   },
 
   mounted() {
