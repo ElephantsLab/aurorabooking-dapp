@@ -1,0 +1,107 @@
+*{
+    font-family: 'Source Sans Pro', sans-serif;
+    color: inherit;
+    font-style: normal  ;
+}
+i{
+    font-size: inherit;
+    line-height: inherit;
+}
+
+body{
+    background-color: #232833;
+    background-image: url(../images/background.webp);
+    background-position: top center;
+    background-size: 100% 967px;
+    background-repeat: no-repeat;
+    color: #B0B2B6;
+
+
+}
+header{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    text-transform: uppercase;
+}
+header nav > a {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+header nav > a:hover{
+    color: #FF462D;
+}
+.section-title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 56px;
+    line-height: 67px;
+    color: #fff;
+}
+.section-describe {
+    color: #b0b2b6;
+    font-size: 20px;
+    line-height: 24px;
+}
+.section-title + .section-button,
+.section-describe + .section-button{
+    margin-top: 40px;
+}
+.section-button {
+    padding: 14px 24px;
+    height: 52px;
+}
+.section-title + .section-describe {
+    margin-top: 24px;
+}
+
+.btn{
+    text-transform: uppercase;
+    border-radius: 10px;    
+}
+.wrapper-main{
+    margin-top: 64px;
+}
+.logo{
+    background: url(../images/logo.svg) no-repeat center;
+    background-size: contain;
+    display: block;
+    width: 217px;
+    height: 32px;
+}
+header .btn{
+    border-radius: 10px;
+    font-weight: bold;
+font-size: 14px;
+line-height: 17px;
+text-transform: uppercase;  
+}
+
+header .btn.btn-connect{
+    border: 2px solid #FF462D;
+    padding: 11px 16px;
+}
+header .btn.btn-connect:not(.connected){
+    color: #FF462D;
+}
+header .btn.btn-connect.connected{
+    color: #ffffff;
+}
+.landing-page{
+    /* min-height: calc(100vh - 70px - 64px); */
+}
+.landing-page .container{
+    height: 100%;
+}
+.landing-page main{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(90vh - 70px - 64px);
+    width: 100% ;
+    max-width: 525px ;
+}
