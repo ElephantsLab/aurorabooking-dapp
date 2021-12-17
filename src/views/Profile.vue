@@ -45,6 +45,10 @@
                 <i class="i-arrow-left-right-line"></i>
                 <span>Transfer</span>
               </button>
+              <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(restaurant)">
+                <i class="i-shopping-cart-2-line"></i>
+                <span>Buy</span>
+              </button>
             </div>
           </div>
         </div>
