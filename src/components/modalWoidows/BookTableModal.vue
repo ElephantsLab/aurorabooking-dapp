@@ -38,6 +38,7 @@
                   </td>
                 </tr>
               </table>
+              <h2 v-if="chosenTableNumber">Selected table: {{ chosenTableNumber }}</h2>
             </slot>
           </div>
 
