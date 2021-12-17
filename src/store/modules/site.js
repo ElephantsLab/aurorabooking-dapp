@@ -107,7 +107,7 @@ export default {
                     }
                 }
 
-                return
+                return tableOrdered;
               } catch (error) {
                 console.log(error);
             }
