@@ -13,7 +13,7 @@
               <h3>Table {{ order.tableNumber }}</h3>
               <h3>Date {{ order.date }}</h3>
             </div>
-            <button>Transfer</button>
+            <button class="btn btn-primary">Transfer</button>
           </td>
         </tr>
       </table>
