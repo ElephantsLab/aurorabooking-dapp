@@ -28,7 +28,6 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              {{ bookDateRes }}
               <button class="modal-default-button" v-on:click="bookPlaceTable">
                 Book
               </button>
