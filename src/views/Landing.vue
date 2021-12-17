@@ -7,10 +7,9 @@
           It is a long established fact that a reader will be distracted by the readable
           content of a page when looking at its layout.
         </div>
-        <button class="section-button" v-on:click="goToBooking">
+        <button class="section-button btn section-button-landing" v-on:click="goToBooking">
           <span> Booking</span>
-          <i class="i-arrow-right-line"></i>
-          
+          <i class="i-arrow-right-line"></i>          
         </button>
       </main>
     </div>
