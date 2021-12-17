@@ -22,6 +22,11 @@ export default new VueRouter({
             path: "/marketplace",
             name: "marketplace",
             component: () => import("../views/Marketplace")
+        },
+        {
+            path: "/order/:id",
+            name: "order",
+            component: () => import("../views/OrderDetails")
         }
     ]
 });

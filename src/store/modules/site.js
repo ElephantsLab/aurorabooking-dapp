@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://aurorabooking.net:3000";
+import config from "../../assets/config.json";
 
 export default {
     state: {
@@ -7,7 +7,9 @@ export default {
         isBookModalOpen: false,
         modalBookDataToProcess: {},
         isSellModalOpen: false,
-        modalSellData: {}
+        modalSellData: {},
+        userOrders: [],
+        orderDetails: {}
     },
     actions: {
         async connectWallet(ctx) {
@@ -21,13 +23,50 @@ export default {
         },
         async bookTableSaveData(ctx, data) {
             try {
-                console.log(data)
-                await axios.post(`${baseUrl}/setNewBooking`, {
+              const currentTimestamp = ~~(new Date().getTime()/1000);
+                await axios.post(`${config.baseURL}/setNewBooking`, {
                     nft_id: data.nftId,
                     place_id: data.placeId,
-                    table_number: data.table
-                },{headers: { 'content-type': 'application/x-www-form-urlencoded' }});
+                    table_number: data.table,
+                    date: currentTimestamp
+                });
                 console.log(true)
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async fetchUserOrders(ctx, data) {
+            try {
+                const userOrdersResponse = await axios.get(`${config.baseURL}/getUserOrders?address=${data.address}`);
+                const finalResArr = [];
+                for (let order of userOrdersResponse.data) {
+                    const placeId = order.place_id;
+                    const nftId = order.nft_id;
+                    const tableNumber = order.table_number;
+                    const date = order.date;
+
+                    finalResArr.push({placeId, nftId, tableNumber, date});
+                }
+
+                ctx.commit("updateUserOrders", finalResArr);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async fetchMetadataById(ctx, data) {
+            try {
+                const metadataResponse = await axios.get(`${config.baseURL}/metadata/${data.id}`);
+                const name = metadataResponse.data.name;
+                const description = metadataResponse.data.description;
+                const attributes = metadataResponse.data.atributes;
+                const image = metadataResponse.data.image;
+
+                const attributesArrRes = [];
+                for (let attribute of attributes) {
+                    attributesArrRes.push({value: attribute.value, type: attribute.trait_type});
+                }
+
+                ctx.commit("updateOrderDetails", {image, name, description, attributesArrRes});
             } catch (error) {
                 console.log(error);
             }
@@ -48,6 +87,12 @@ export default {
         },
         updateModalSellDataToProcess(state, data) {
             state.modalSellData = data;
+        },
+        updateUserOrders(state, data) {
+            state.userOrders = data;
+        },
+        updateOrderDetails(state, data) {
+            state.orderDetails = data;
         }
     },
     getters: {
@@ -65,6 +110,12 @@ export default {
         },
         modalSellDataToProcessGetter(state) {
             return state.modalSellData;
+        },
+        getUserOrders(state) {
+            return state.userOrders;
+        },
+        getOrderDetails(state) {
+            return state.orderDetails;
         }
     }
 }
