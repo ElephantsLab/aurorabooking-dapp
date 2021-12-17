@@ -3,13 +3,13 @@
     <h3>{{ getOrderDetails.name }}</h3>
     <h4>{{ getOrderDetails.description }}</h4>
     <img class="restaurant" v-bind:src="getOrderDetails.image">
-    <table>
-       Atributes: [
-      <tr v-for="(attr, id) in getOrderDetails.attributesArrRes" :key="id">
-       {{ attr }}
-      </tr>
-      ]
-    </table>
+<!--    <table>-->
+<!--       Atributes: [-->
+<!--      <tr v-for="(attr, id) in getOrderDetails.attributesArrRes" :key="id">-->
+<!--       {{ attr }}-->
+<!--      </tr>-->
+<!--      ]-->
+<!--    </table>-->
   </div>
 </template>
 
