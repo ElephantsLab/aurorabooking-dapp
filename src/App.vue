@@ -12,7 +12,7 @@ import Header from "./components/Header";
 import Core from "./core/core";
 import BookTableModal from "./components/modalWoidows/BookTableModal";
 import SetOnSellModal from "./components/modalWoidows/SetOnSellModal";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions} from "vuex";
 
 export default {
   name: "App",
@@ -26,8 +26,14 @@ export default {
     "isOpenSellModalGetter",
     "userDataGetter",
   ]),
+  methods: {
+    ...mapActions(['connectWallet'])
+  },
   mounted() {
     this.$root.core = new Core(this);
+    if(window.ethereum){
+      window.ethereum.on('accountsChanged', this.connectWallet)
+    }
   },
 };
 </script>

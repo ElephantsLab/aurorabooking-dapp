@@ -18,25 +18,32 @@
         ><span>Profile</span></router-link
       >
     </nav>
-      <button class="btn btn-connect" v-on:click="connectUser">
+      <button v-if="userDataGetter && !userDataGetter.isConnected" class="btn btn-connect" v-on:click="connectUser">
         Connect Wallet
       </button>
-      <button class="btn btn-connect connected">
+      <button v-if="userDataGetter && userDataGetter.address &&userDataGetter.isConnected" class="btn btn-connect connected">
         <i class="i-wallet-2-fill"></i>
-        <span>0x12...0ds0</span>
+        <span>{{addrShort(userDataGetter.address)}}</span>
       </button>
   </header>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
+  computed: {
+    ...mapGetters(['userDataGetter'])
+  },
   methods: {
     ...mapActions(["connectWallet"]),
     connectUser() {
       this.connectWallet();
     },
+
+    addrShort(addr){
+      return addr.slice(0, 4) + "..." + addr.slice(addr.length - 4, addr.length)
+    }
   },
 };
 </script>
