@@ -166,8 +166,9 @@ export default {
             (el) => !usedTables.includes(el)
         );
       } else {
+        this.availableTables = [];
         for (let i = 0; i < this.modalBookDataToProcessGetter.TABLES; i++) {
-          if (this.availableTables.length < this.modalBookDataToProcessGetter.TABLES - 1) {
+          if (this.availableTables.length < this.modalBookDataToProcessGetter.TABLES) {
             this.availableTables.push(i + 1);
             this.availableTables.sort((a, b) => a - b);
           }
