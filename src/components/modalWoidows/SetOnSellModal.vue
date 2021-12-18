@@ -97,7 +97,7 @@ export default {
       } catch (error) {
         this.transactionStatus = undefined;
       }
-      if (res.tx.tx.status) this.transactionStatus = "Success";
+      if (res.tx && res.tx.tx.status) this.transactionStatus = "Success";
       else this.transactionStatus = "Fail";
       await this.setNewLot({ orderId: sellData.orderId, price: this.sellPrice, lotId: res.lotId });
     },
