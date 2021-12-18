@@ -90,8 +90,13 @@ export default {
     ...mapMutations(["updateIsOpenSellModal"]),
     ...mapActions(["setNewLot"]),
     async sellToken(sellData) {
-      const res = await this.$root.core.getTokenAllowance({ nftId: sellData.nftId, price: this.sellPrice });
-      console.log(res)
+      this.transactionStatus = "Pending...";
+      let res;
+      try {
+        res = await this.$root.core.getTokenAllowance({ nftId: sellData.nftId, price: this.sellPrice });
+      } catch (error) {
+        this.transactionStatus = undefined;
+      }
       if (res.tx.tx.status) this.transactionStatus = "Success";
       else this.transactionStatus = "Fail";
       await this.setNewLot({ orderId: sellData.orderId, price: this.sellPrice, lotId: res.lotId });
