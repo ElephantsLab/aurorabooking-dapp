@@ -116,8 +116,8 @@
                 <a href="" class="card-name">{{ getPlaceName(activeLot.place_id) }}</a>
                 <div class="card-describe">
                   <span>{{ getPlaceTown(activeLot.place_id) }}</span>
-                  <span>{{ activeLot.price }} $</span>
-<!--                  <span>Asian cuisine</span>-->
+                  <span style="color: #fff">{{ activeLot.price }} ETH</span><br />
+                  <a style="font-size: 14px">Table #{{ activeLot.table_number }} ({{ activeLot.date.substr(0, 10) }})</a>
                 </div>
               </div>
               <div class="card-footer">
