@@ -42,22 +42,23 @@
                   <div class="modal-input-title">Сost</div>
                   <div class="input">
                     <i class="i-money-dollar-circle-line"></i>
-                    <input type="number" value="0.00"> 
+                    <input type="number" value="0">
                   </div>
-                  <div class="modal-input-amount ">0.00 BTC</div>
+<!--                  <div class="modal-input-amount ">0.00 BTC</div>-->
                 </div>
 
-                <div class="modal-input">
-                  <div class="modal-input-title">Date</div>
-                  <div class="input">
-                    <input type="datetime-local">
-                  </div>
-                </div>
+<!--                <div class="modal-input">-->
+<!--                  <div class="modal-input-title">Date</div>-->
+<!--                  <div class="input">-->
+<!--                    <input type="datetime-local">-->
+<!--                  </div>-->
+<!--                </div>-->
               </div>
             <slot name="body">
               <input type="number" placeholder="Enter price" v-model="sellPrice">
             </slot>
           </div>
+          <h2 v-if="transactionStatus">transaction status: {{ transactionStatus }}</h2>
           <div class="modal-footer">
             <slot name="footer">
               <button class="modal-btn-border modal-btn btn" v-on:click="sellToken(modalSellDataToProcessGetter)">
@@ -81,7 +82,7 @@ export default {
   data() {
     return {
       sellPrice: 0,
-      transactionState: undefined
+      transactionStatus: undefined
     }
   },
   methods: {
@@ -89,8 +90,8 @@ export default {
     ...mapActions(["setNewLot"]),
     async sellToken(sellData) {
       const res = await this.$root.core.getTokenAllowance({ nftId: sellData.nftId, price: this.sellPrice });
-      if (res.tx.status) this.transactionState = "Success";
-      else this.transactionState = "Fail";
+      if (res.tx.status) this.transactionStatus = "Success";
+      else this.transactionStatus = "Fail";
       await this.setNewLot({ orderId: sellData.orderId, price: this.sellPrice, lotId: res.lotId });
     }
   },
