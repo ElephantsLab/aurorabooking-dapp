@@ -5,15 +5,55 @@
         <div class="modal-container">
           <div class="modal-header">
             <slot name="header">
-              {{ modalSellDataToProcessGetter.placeName }}
-             
+              <div>                
+                Sell {{ modalSellDataToProcessGetter.placeName }}
+              </div>             
             </slot>
             <button class="btn-modal-close" v-on:click="updateIsOpenSellModal(false)">
                <i class="i-close-line"></i>
             </button>
           </div>
-          <h2>Enter price</h2>
+          
           <div class="modal-body">
+
+              <div class="modal-data">
+                <!-- <img v-bind:src="getPlaceImage(modalBookDataToProcessGetter.ID)" /> -->
+                <img src="" />
+                <div class="modal-data-content">
+                  <a href="" class="card-name"> modalBookDataToProcessGetter.NAME </a>
+                  <div class="card-describe">
+                    <span> getPlaceTown(modalBookDataToProcessGetter.ID) </span>
+                  </div>
+                  <!--  v-bind:class="getPlaceStars(modalBookDataToProcessGetter.ID)" -->
+                  <div class="stars-container three">
+                    <i class="i-star-fill"> </i>
+                    <i class="i-star-fill"> </i>
+                    <i class="i-star-fill"> </i>
+                    <i class="i-star-fill"> </i>
+                    <i class="i-star-fill"> </i>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="modal-input-container">
+
+                <div class="modal-input">
+                  <div class="modal-input-title">Сost</div>
+                  <div class="input">
+                    <i class="i-money-dollar-circle-line"></i>
+                    <input type="number" value="0.00"> 
+                  </div>
+                  <div class="modal-input-amount ">0.00 BTC</div>
+                </div>
+
+                <div class="modal-input">
+                  <div class="modal-input-title">Date</div>
+                  <div class="input">
+                    <input type="datetime-local">
+                  </div>
+                </div>
+              </div>
             <slot name="body">
               <input type="number" placeholder="Enter price" v-model="sellPrice">
             </slot>
