@@ -3,6 +3,7 @@
     <Header />
     <BookTableModal v-if="isOpenBookModalGetter" />
     <SetOnSellModal v-if="isOpenSellModalGetter" />
+    <TransferModal  />
     <router-view class="wrapper-main" />
     <transaction-status
         v-if="getTransactionModalIsOpen"
@@ -18,6 +19,7 @@ import Header from "./components/Header";
 import Core from "./core/core";
 import BookTableModal from "./components/modalWoidows/BookTableModal";
 import SetOnSellModal from "./components/modalWoidows/SetOnSellModal";
+import TransferModal from "./components/modalWoidows/TransferModal";
 import TransactionStatus from "./components/modalWoidows/TransactionStatus";
 import { mapGetters, mapActions} from "vuex";
 
@@ -27,6 +29,7 @@ export default {
     SetOnSellModal,
     Header,
     BookTableModal,
+    TransferModal,
     TransactionStatus
   },
   computed: mapGetters([

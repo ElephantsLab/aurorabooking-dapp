@@ -31,20 +31,31 @@
                   </div>
                 </div>
               </div>
+              <div class="modal-input-container">
               <div class="modal-input">
                 <div class="modal-input-title">Number of guests</div>
                 <div class="input">
                   <i class="i-parent-line"></i>
-                  <input type="text" disabled>
+                  <input type="text" value="" disabled>
                 </div>
               </div>
               <div class="modal-input">
                 <div class="modal-input-title">Date</div>
                 <div class="input">
                   <input type="datetime-local">
-
                 </div>
               </div>
+              </div>
+              <div class="modal-button-container"> 
+                <button class="button">1</button>
+                <button class="button">8</button>
+                <button class="button active">12</button>
+                <button class="button">17</button>
+                <button class="button">23</button>
+                <button class="button">85</button>
+                <button class="button">109</button>
+              </div>
+
               <table>
                 <tr>
                   <h2>Date</h2>
@@ -75,8 +86,9 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="modal-btn modal-btn-border btn" v-on:click="bookPlaceTable">
-                Book
+              <button class="modal-btn modal-btn-border btn" 
+              v-on:click="bookPlaceTable">
+                Approve
               </button>
               <!-- <button
                 class="modal-btn modal-btn-border btn"
