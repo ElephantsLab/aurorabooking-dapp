@@ -53,8 +53,14 @@ export default {
     ...mapMutations(["updateIsOpenSellModal", "updateIsOpenTransferModal", "updateIsOpenTransactionModal"]),
     ...mapActions(["setNewLot"]),
     async transferNFT() {
+      this.transactionStatus = "Pending...";
       const user = window.localStorage.getItem("address");
-      const txRes = await this.$root.core.transfer({owner: user, receiver: this.receiver, nftId: this.getModalTransferData.nftId});
+      let txRes;
+      try {
+        txRes = await this.$root.core.transfer({owner: user, receiver: this.receiver, nftId: this.getModalTransferData.nftId});
+      } catch (error) {
+        this.transactionStatus  = undefined;
+      }
       if (txRes.tx.status) this.transactionStatus = "Success";
       else this.transactionStatus = "Fail";
     },
