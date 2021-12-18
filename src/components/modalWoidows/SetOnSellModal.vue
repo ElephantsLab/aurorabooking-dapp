@@ -40,15 +40,18 @@ import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      sellPrice: 0
+      sellPrice: 0,
+      transactionState: undefined
     }
   },
   methods: {
     ...mapMutations(["updateIsOpenSellModal"]),
     ...mapActions(["setNewLot"]),
     async sellToken(sellData) {
-      const lotId = await this.$root.core.getTokenAllowance({ nftId: sellData.nftId, price: this.sellPrice })
-      await this.setNewLot({ orderId: sellData.orderId, price: this.sellPrice, lotId: lotId });
+      const res = await this.$root.core.getTokenAllowance({ nftId: sellData.nftId, price: this.sellPrice });
+      if (res.tx.status) this.transactionState = "Success";
+      else this.transactionState = "Fail";
+      await this.setNewLot({ orderId: sellData.orderId, price: this.sellPrice, lotId: res.lotId });
     }
   },
   computed: mapGetters(["modalSellDataToProcessGetter"])

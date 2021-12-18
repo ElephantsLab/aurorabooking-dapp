@@ -26,7 +26,7 @@
               </div>
             </slot>
           </div>
-
+          <h2 v-if="transactionStatus">transaction status: {{ transactionStatus }}</h2>
           <div class="modal-footer">
             <slot name="footer">
               <button class="modal-btn-border modal-btn btn" v-on:click="transferNFT">Transfer</button>
@@ -45,7 +45,8 @@ export default {
   data() {
     return {
       sellPrice: 0,
-      receiver: ""
+      receiver: "",
+      transactionStatus: undefined
     };
   },
   methods: {
@@ -54,7 +55,8 @@ export default {
     async transferNFT() {
       const user = window.localStorage.getItem("address");
       const txRes = await this.$root.core.transfer({owner: user, receiver: this.receiver, nftId: this.getModalTransferData.nftId});
-      console.log(txRes);
+      if (txRes.tx.status) this.transactionStatus = "Success";
+      else this.transactionStatus = "Fail";
     },
   },
   computed: mapGetters(["modalSellDataToProcessGetter", "getModalTransferData"]),

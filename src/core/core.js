@@ -36,11 +36,11 @@ export default class Core {
         const getApproved = await this.nftContract.getApproved(data.nftId);
         if (getApproved && getApproved.toLowerCase() === contractAddress.toLowerCase()) {
             const sellReceipt = await this.sellOrder({nftId: data.nftId, price: data.price});
-            return parseInt(sellReceipt.tx.logs[sellReceipt.tx.logs.length - 1].topics[3].substring(2), 16);
+            return {lotId: parseInt(sellReceipt.tx.logs[sellReceipt.tx.logs.length - 1].topics[3].substring(2), 16), tx: sellReceipt};
         } else {
             if ((await this.approveToSpendToken({nftId: data.nftId})).tx.status) {
                 const sellReceipt = await this.sellOrder({nftId: data.nftId, price: data.price});
-                return parseInt(sellReceipt.tx.logs[sellReceipt.tx.logs.length - 1].topics[3].substring(2), 16);
+                return {lotId: parseInt(sellReceipt.tx.logs[sellReceipt.tx.logs.length - 1].topics[3].substring(2), 16), tx: sellReceipt};
             }
         }
     }

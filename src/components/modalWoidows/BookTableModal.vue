@@ -82,6 +82,7 @@
             </slot>
           </div>
 
+          <h2 v-if="transactionStatus">Transaction status: {{ transactionStatus }}</h2>
           <div class="modal-footer">
             <slot name="footer">
               <button class="modal-btn modal-btn-border btn" 
@@ -113,6 +114,7 @@ export default {
       bookDate: new Date().toISOString().split("T")[0],
       availableTables: [],
       updateTableInterval: undefined,
+      transactionStatus: undefined
     };
   },
   methods: {
@@ -124,10 +126,8 @@ export default {
           placeId: this.modalBookDataToProcessGetter.ID,
           tableId: this.chosenTableNumber,
         });
-        if (bookTableWriteRes.tx.status) {
-          this.updateIsOpenTransactionModal(true);
-          this.updateSuccessMessage(true);
-        }
+        if (bookTableWriteRes.tx.status) this.transactionStatus = "Success";
+        else this.transactionStatus = "Fail";
         this.bookTableSaveData({
           placeId: this.modalBookDataToProcessGetter.ID,
           table: this.chosenTableNumber,
