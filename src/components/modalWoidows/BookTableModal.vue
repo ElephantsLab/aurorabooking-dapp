@@ -59,8 +59,10 @@
                          v-model="bookDate">
                 </div>
               </div>
-              <h2>Table</h2>
+              
+              <div class="modal-input-title"> Table</div>
               <div class="modal-button-container">
+
                 <button class="button" v-for="(table, index) in availableTables"
                         v-on:click="chooseTable(table)"
                         v-bind:key="index" v-bind:class="{ 'active': chosenTableNumber === table }">{{ table }}</button>
