@@ -54,7 +54,7 @@ export default class Core {
 
     async sellOrder(data) {
         // TODO: add amount
-        const txResponse = await this.contract.sell(data.nftId, data.price);
+        const txResponse = await this.contract.sell(data.nftId, data.price, {value: data.price});
         const txReceipt = await txResponse.wait();
 
         return {tx: txReceipt};

@@ -6,7 +6,7 @@
           <div class="modal-header">
             <slot name="header">
               <div>                
-                Sell {{ modalSellDataToProcessGetter.placeName }}
+                Sell
               </div>             
             </slot>
             <button class="btn-modal-close" v-on:click="updateIsOpenSellModal(false)">
@@ -18,14 +18,14 @@
 
               <div class="modal-data">
                 <!-- <img v-bind:src="getPlaceImage(modalBookDataToProcessGetter.ID)" /> -->
-                <img src="" />
+                <img v-bind:src="getPlaceImage(modalSellDataToProcessGetter.placeId)" />
                 <div class="modal-data-content">
-                  <a href="" class="card-name"> modalBookDataToProcessGetter.NAME </a>
+                  <a href="" class="card-name"> {{ getPlaceName(modalSellDataToProcessGetter.placeId) }} </a>
                   <div class="card-describe">
-                    <span> getPlaceTown(modalBookDataToProcessGetter.ID) </span>
+                    <span> {{ getPlaceTown(modalSellDataToProcessGetter.placeId) }} </span>
                   </div>
                   <!--  v-bind:class="getPlaceStars(modalBookDataToProcessGetter.ID)" -->
-                  <div class="stars-container three">
+                  <div class="stars-container three" v-bind:class="getPlaceStars(modalSellDataToProcessGetter.placeId)">
                     <i class="i-star-fill"> </i>
                     <i class="i-star-fill"> </i>
                     <i class="i-star-fill"> </i>
@@ -42,7 +42,7 @@
                   <div class="modal-input-title">Сost</div>
                   <div class="input">
                     <i class="i-money-dollar-circle-line"></i>
-                    <input type="number" value="0">
+                    <input type="number" value="0" v-model="sellPrice">
                   </div>
 <!--                  <div class="modal-input-amount ">0.00 BTC</div>-->
                 </div>
@@ -54,9 +54,9 @@
 <!--                  </div>-->
 <!--                </div>-->
               </div>
-            <slot name="body">
-              <input type="number" placeholder="Enter price" v-model="sellPrice">
-            </slot>
+<!--            <slot name="body">-->
+<!--              <input type="number" placeholder="Enter price" v-model="sellPrice">-->
+<!--            </slot>-->
           </div>
           <h2 v-if="transactionStatus">transaction status: {{ transactionStatus }}</h2>
           <div class="modal-footer">
@@ -77,6 +77,7 @@
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
+import config from "../../assets/config.json";
 
 export default {
   data() {
@@ -90,10 +91,23 @@ export default {
     ...mapActions(["setNewLot"]),
     async sellToken(sellData) {
       const res = await this.$root.core.getTokenAllowance({ nftId: sellData.nftId, price: this.sellPrice });
-      if (res.tx.status) this.transactionStatus = "Success";
+      console.log(res)
+      if (res.tx.tx.status) this.transactionStatus = "Success";
       else this.transactionStatus = "Fail";
       await this.setNewLot({ orderId: sellData.orderId, price: this.sellPrice, lotId: res.lotId });
-    }
+    },
+    getPlaceName(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).NAME;
+    },
+    getPlaceStars(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).STARS;
+    },
+    getPlaceTown(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).TOWN;
+    },
+    getPlaceImage(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).IMG;
+    },
   },
   computed: mapGetters(["modalSellDataToProcessGetter"])
 }
