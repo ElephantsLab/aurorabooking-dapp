@@ -2,10 +2,9 @@
   <div class="landing-page">
     <div class="container">
       <main>
-        <div class="section-title">Available restaurants where you can book a table</div>
+        <div class="section-title">The best service for booking restaurants on the Aurora blockchain</div>
         <div class="section-describe">
-          It is a long established fact that a reader will be distracted by the readable
-          content of a page when looking at its layout.
+          Solve your booking problem once and for all
         </div>
         <button class="section-button btn section-button-landing" v-on:click="goToBooking">
           <span> Booking</span>
