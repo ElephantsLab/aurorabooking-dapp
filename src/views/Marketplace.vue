@@ -131,7 +131,7 @@
                 <button class="btn card-btn card-btn-border" 
                   @click="purchaseOrder(activeLot)">
                    <i class="i-shopping-cart-2-line"></i>
-                  Purchase lot
+                  <span>Purchase lot</span>
                 </button>
               </div>
             </div>
