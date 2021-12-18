@@ -4,7 +4,6 @@ const nftContractAddress = "0xf26F41335fBDfd8F4515EA4b65DaFBd7581ccC85";
 const NODE = "https://mainnet.aurora.dev";
 import abi from "./contractAbi.json";
 import nftAbi from "./nftContractAbi.json";
-// import axios from "axios";
 
 export default class Core {
     constructor(context) {
@@ -53,8 +52,8 @@ export default class Core {
     }
 
     async sellOrder(data) {
-        // TODO: add amount
-        const txResponse = await this.contract.sell(data.nftId, data.price, {value: data.price});
+        const amount = ethers.utils.parseUnits(data.price.toString());
+        const txResponse = await this.contract.sell(data.nftId, amount._hex);
         const txReceipt = await txResponse.wait();
 
         return {tx: txReceipt};
