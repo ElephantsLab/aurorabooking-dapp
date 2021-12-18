@@ -62,10 +62,7 @@ export default {
       this.updateIsOpenBookModal(true);
       this.updateModalBookDataToProcess(placeData);
     },
-  },
-  mounted() {
-    console.log(true);
-  },
+  }
 };
 </script>
 

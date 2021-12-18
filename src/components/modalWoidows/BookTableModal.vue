@@ -123,11 +123,17 @@ export default {
     ...mapMutations(["updateIsOpenBookModal", "updateIsOpenTransactionModal", "updateSuccessMessage"]),
     ...mapActions(["bookTableSaveData", "fetchActiveOrders"]),
     async bookPlaceTable() {
+      this.transactionStatus = "Pending...";
       if (this.chosenTableNumber) {
-        const bookTableWriteRes = await this.$root.core.bookTable({
-          placeId: this.modalBookDataToProcessGetter.ID,
-          tableId: this.chosenTableNumber,
-        });
+        let bookTableWriteRes;
+        try {
+          bookTableWriteRes = await this.$root.core.bookTable({
+            placeId: this.modalBookDataToProcessGetter.ID,
+            tableId: this.chosenTableNumber,
+          });
+        } catch (error) {
+          this.transactionStatus = undefined;
+        }
         if (bookTableWriteRes.tx.status) this.transactionStatus = "Success";
         else this.transactionStatus = "Fail";
         this.bookTableSaveData({
