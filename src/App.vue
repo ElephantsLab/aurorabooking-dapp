@@ -3,7 +3,7 @@
     <Header />
     <BookTableModal v-if="isOpenBookModalGetter" />
     <SetOnSellModal v-if="isOpenSellModalGetter" />
-    <TransferModal  />
+    <TransferModal v-if="false" />
     <router-view class="wrapper-main" />
     <transaction-status
         v-if="getTransactionModalIsOpen"

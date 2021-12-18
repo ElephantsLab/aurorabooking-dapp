@@ -5,7 +5,7 @@
         <div class="modal-container">
           <div class="modal-header">
             <div>
-              <slot name="header">{{ modalBookDataToProcessGetter.NAME }}</slot>
+              <slot name="header">Booking</slot>
             </div>
             <button class="btn-modal-close" v-on:click="updateIsOpenBookModal(false)">
               <i class="i-close-line"></i>
@@ -15,14 +15,14 @@
           <div class="modal-body">
             <slot name="body">
               <div class="modal-data">
-                <img src="@/assets/images/cardImage1.png" />
+                <img v-bind:src="getPlaceImage(modalBookDataToProcessGetter.ID)" />
                 <div class="modal-data-content">
-                  <a href="" class="card-name">L’Atelier Relais and Chateaux</a>
+                  <a href="" class="card-name">{{ modalBookDataToProcessGetter.NAME }}</a>
                   <div class="card-describe">
-                    <span>Kyiv</span>
-                    <span>Asian cuisine</span>
+                    <span>{{ getPlaceTown(modalBookDataToProcessGetter.ID) }}</span>
+<!--                    <span>Asian cuisine</span>-->
                   </div>
-                  <div class="stars-container three" >
+                  <div class="stars-container three" v-bind:class="getPlaceStars(modalBookDataToProcessGetter.ID)">
                     <i class="i-star-fill"> </i>
                     <i class="i-star-fill"> </i>
                     <i class="i-star-fill"> </i>
@@ -32,54 +32,52 @@
                 </div>
               </div>
               <div class="modal-input-container">
-              <div class="modal-input">
-                <div class="modal-input-title">Number of guests</div>
-                <div class="input">
-                  <i class="i-parent-line"></i>
-                  <input type="text" value="" disabled>
-                </div>
+<!--              x-->
+<!--              <div class="modal-input">-->
+<!--                <div class="modal-input-title">Date</div>-->
+<!--                <div class="input">-->
+<!--                  <input type="datetime-local">-->
+<!--                </div>-->
+<!--              </div>-->
               </div>
+<!--              <div class="modal-button-container"> -->
+<!--                <button class="button" v-bind:class="{ 'active': chosenTableNumber === 1 }">1</button>-->
+<!--                <button class="button">8</button>-->
+<!--                <button class="button">12</button>-->
+<!--                <button class="button">17</button>-->
+<!--                <button class="button">23</button>-->
+<!--                <button class="button">85</button>-->
+<!--                <button class="button">109</button>-->
+<!--              </div>-->
+
               <div class="modal-input">
                 <div class="modal-input-title">Date</div>
                 <div class="input">
-                  <input type="datetime-local">
+                  <input type="date"
+                         min="2021-12-18"
+                         max="2023-12-31"
+                         v-model="bookDate">
                 </div>
               </div>
+              <h2>Table</h2>
+              <div class="modal-button-container">
+                <button class="button" v-for="table in availableTables"
+                        v-on:click="chooseTable(table)"
+                        v-bind:key="table" v-bind:class="{ 'active': chosenTableNumber === table }">{{ table }}</button>
+                <!--                    <button class="button">8</button>-->
+                <!--                    <button class="button">12</button>-->
+                <!--                    <button class="button">17</button>-->
+                <!--                    <button class="button">23</button>-->
+                <!--                    <button class="button">85</button>-->
+                <!--                    <button class="button">109</button>-->
               </div>
-              <div class="modal-button-container"> 
-                <button class="button">1</button>
-                <button class="button">8</button>
-                <button class="button active">12</button>
-                <button class="button">17</button>
-                <button class="button">23</button>
-                <button class="button">85</button>
-                <button class="button">109</button>
-              </div>
-
-              <table>
-                <tr>
-                  <h2>Date</h2>
-                  <input
-                    type="date"
-                    id="start"
-                    name="trip-start"
-                    value="2021-12-17"
-                    min="2021-12-17"
-                    max="2023-12-31"
-                    v-model="bookDate"
-                  />
-                </tr>
-                <tr>
-                  <h2>Table</h2>
-                  <td
-                    v-for="table in availableTables"
-                    v-on:click="chooseTable(table)"
-                    v-bind:key="table"
-                  >
-                    <button>{{ table }}</button>
-                  </td>
-                </tr>
-              </table>
+              <!--                  <td-->
+              <!--                    v-for="table in availableTables"-->
+              <!--                    v-on:click="chooseTable(table)"-->
+              <!--                    v-bind:key="table"-->
+              <!--                  >-->
+              <!--                    <button>{{ table }}</button>-->
+              <!--                  </td>-->
               <h2 v-if="chosenTableNumber">Selected table: {{ chosenTableNumber }}</h2>
             </slot>
           </div>
@@ -106,6 +104,7 @@
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
+import config from "../../assets/config.json";
 
 export default {
   data() {
@@ -136,15 +135,33 @@ export default {
     chooseTable(number) {
       this.chosenTableNumber = number;
     },
+    getPlaceStars(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).STARS;
+    },
+    getPlaceTown(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).TOWN;
+    },
+    getPlaceImage(place_id) {
+      return config.RESTAURANTS.find((el) => el.ID === place_id).IMG;
+    },
     async updateTableStatus(date) {
       const usedTables = await this.fetchActiveOrders({
         placeId: this.modalBookDataToProcessGetter.ID,
         date: date,
       });
-      this.availableTables = this.availableTables.filter(
-        (el) => !usedTables.includes(el)
-      );
-    },
+      if (usedTables.length) {
+        this.availableTables = this.availableTables.filter(
+            (el) => !usedTables.includes(el)
+        );
+      } else {
+        for (let i = 0; i < this.modalBookDataToProcessGetter.TABLES; i++) {
+          if (this.availableTables.length < this.modalBookDataToProcessGetter.TABLES - 1) {
+            this.availableTables.push(i + 1);
+            this.availableTables.sort((a, b) => a - b);
+          }
+        }
+      }
+    }
   },
   computed: {
     ...mapGetters(["modalBookDataToProcessGetter"]),
