@@ -3,8 +3,8 @@
     <div class="container">
       <div class="section-title">Booking</div>
       <div class="section-describe">
-        It is a long established fact that a reader will be distracted by the readable
-        content of a page when looking at its layout.
+        Only the best restaurants in the world for you.
+        Make your choice and enjoy the service!
       </div>
     </div>
     <div class="container-content">
@@ -36,7 +36,7 @@
             </div>
             <div class="card-footer">
               <button  class="btn card-btn card-btn-border" v-on:click="openBookModal(restaurant)">
-                Booking
+                Book now
               </button>
             </div>
           </div>
