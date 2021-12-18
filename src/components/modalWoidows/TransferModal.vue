@@ -7,7 +7,7 @@
             <slot name="header">
               <div>Transfer</div>
             </slot>
-            <button class="btn-modal-close" v-on:click="updateIsOpenSellModal(false)">
+            <button class="btn-modal-close" v-on:click="updateIsOpenTransferModal(false)">
               <i class="i-close-line"></i>
             </button>
           </div>
@@ -19,17 +19,17 @@
                 <div class="modal-input-title">Wallet addresses</div>
                 <div class="input">
                   <i class="i-wallet-2-line"></i>
-                  <input type="text" placeholder="Write the address" />
-                  <button class="button-insert">insert</button>
+                  <input type="text" placeholder="Write the address" v-model="receiver"/>
+<!--                  <button class="button-insert">insert</button>-->
                 </div>
-                <div class="modal-input-amount">0.00 BTC</div>
+<!--                <div class="modal-input-amount">0.00 BTC</div>-->
               </div>
             </slot>
           </div>
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="modal-btn-border modal-btn btn">Approve</button>
+              <button class="modal-btn-border modal-btn btn" v-on:click="transferNFT">Transfer</button>
             </slot>
           </div>
         </div>
@@ -45,23 +45,18 @@ export default {
   data() {
     return {
       sellPrice: 0,
+      receiver: ""
     };
   },
   methods: {
-    ...mapMutations(["updateIsOpenSellModal"]),
+    ...mapMutations(["updateIsOpenSellModal", "updateIsOpenTransferModal", "updateIsOpenTransactionModal"]),
     ...mapActions(["setNewLot"]),
-    async sellToken(sellData) {
-      const lotId = await this.$root.core.getTokenAllowance({
-        nftId: sellData.nftId,
-        price: this.sellPrice,
-      });
-      await this.setNewLot({
-        orderId: sellData.orderId,
-        price: this.sellPrice,
-        lotId: lotId,
-      });
+    async transferNFT() {
+      const user = window.localStorage.getItem("address");
+      const txRes = await this.$root.core.transfer({owner: user, receiver: this.receiver, nftId: this.getModalTransferData.nftId});
+      console.log(txRes);
     },
   },
-  computed: mapGetters(["modalSellDataToProcessGetter"]),
+  computed: mapGetters(["modalSellDataToProcessGetter", "getModalTransferData"]),
 };
 </script>

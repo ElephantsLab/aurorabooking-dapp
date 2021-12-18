@@ -124,6 +124,9 @@ export default {
           placeId: this.modalBookDataToProcessGetter.ID,
           tableId: this.chosenTableNumber,
         });
+        if (bookTableWriteRes.tx.status) {
+          console.log(false)
+        }
         this.bookTableSaveData({
           placeId: this.modalBookDataToProcessGetter.ID,
           table: this.chosenTableNumber,

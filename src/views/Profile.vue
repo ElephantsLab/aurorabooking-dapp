@@ -44,7 +44,7 @@
                 <i class="i-price-tag-2-line"></i>
                 <span>Sell</span>
               </button>
-              <button  class="btn card-btn card-btn-border" v-on:click="openSellModal(order)">
+              <button  class="btn card-btn card-btn-border" v-on:click="openTransferModal(order)">
                 <i class="i-arrow-left-right-line"></i>
                 <span>Transfer</span>
               </button>
@@ -95,6 +95,8 @@ export default {
       "updateUserData",
       "updateIsOpenSellModal",
       "updateModalSellDataToProcess",
+      "updateIsOpenTransferModal",
+      "updateModalTransferData"
     ]),
     ...mapActions(["fetchUserOrders", "getUserQrCodes"]),
     getPlaceName(place_id) {
@@ -116,6 +118,10 @@ export default {
         date: sellData.date,
         orderId: sellData.orderId,
       });
+    },
+    openTransferModal(transferData) {
+      this.updateIsOpenTransferModal(true);
+      this.updateModalTransferData(transferData);
     },
     updateProfileData() {
       const userAddress = window.localStorage.getItem("address");

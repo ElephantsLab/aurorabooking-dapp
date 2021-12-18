@@ -8,6 +8,8 @@ export default {
         modalBookDataToProcess: {},
         isSellModalOpen: false,
         isOpenTransactionModal: false,
+        iOpenTransferModal: false,
+        modalTransferData: {},
         modalSellData: {},
         userOrders: [],
         orderDetails: {},
@@ -180,6 +182,12 @@ export default {
         },
         updateIsOpenTransactionModal(state, data) {
             state.isOpenTransactionModal = data;
+        },
+        updateIsOpenTransferModal(state, data) {
+            state.iOpenTransferModal = data;
+        },
+        updateModalTransferData(state, data) {
+            state.modalTransferData = data;
         }
     },
     getters: {
@@ -221,6 +229,12 @@ export default {
         },
         getTransactionModalIsOpen(state) {
             return state.isOpenTransactionModal;
+        },
+        getIsOpenTransferModal(state) {
+            return state.iOpenTransferModal;
+        },
+        getModalTransferData(state) {
+            return state.modalTransferData;
         }
     }
 }
