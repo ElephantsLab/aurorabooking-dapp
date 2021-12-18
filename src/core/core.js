@@ -59,7 +59,13 @@ export default class Core {
 
         return {tx: txReceipt};
     }
-  async buy(lot_id, price){
+    async transfer(data) {
+        const txResponse = await this.nftContract.transferFrom(data.owner, data.receiver, data.nftId);
+        const txReceipt = await txResponse.wait();
+
+        return { tx: txReceipt };
+    }
+    async buy(lot_id, price){
         
         const txResponse = await this.contract.buy(lot_id, {value: ethers.utils.parseUnits(price)});
 

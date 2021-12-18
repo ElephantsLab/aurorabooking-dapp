@@ -3,7 +3,7 @@
     <Header />
     <BookTableModal v-if="isOpenBookModalGetter" />
     <SetOnSellModal v-if="isOpenSellModalGetter" />
-    <TransferModal v-if="false" />
+    <TransferModal v-if="getIsOpenTransferModal" />
     <router-view class="wrapper-main" />
     <transaction-status
         v-if="getTransactionModalIsOpen"
@@ -39,7 +39,8 @@ export default {
     "getSuccessMessage",
     "getPendingMessage",
     "getFailMessage",
-    "getTransactionModalIsOpen"
+    "getTransactionModalIsOpen",
+    "getIsOpenTransferModal"
   ]),
   methods: {
     ...mapActions(['connectWallet'])
