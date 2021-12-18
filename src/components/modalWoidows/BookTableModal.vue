@@ -86,7 +86,7 @@
             <slot name="footer">
               <button class="modal-btn modal-btn-border btn" 
               v-on:click="bookPlaceTable">
-                Approve
+                Book now
               </button>
               <!-- <button
                 class="modal-btn modal-btn-border btn"
