@@ -95,7 +95,7 @@
           <div class="wrapper-cards">
             <div
               class="card card-marketplace"
-              v-for="activeLot in getActiveLots" :key="activeLot.id"
+              v-for="(activeLot, index) in getActiveLots" :key="index"
             >
             <!-- 
                    v-for="(restaurant, index) in config.RESTAURANTS"

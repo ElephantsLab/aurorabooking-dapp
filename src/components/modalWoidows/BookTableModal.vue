@@ -61,9 +61,9 @@
               </div>
               <h2>Table</h2>
               <div class="modal-button-container">
-                <button class="button" v-for="table in availableTables"
+                <button class="button" v-for="(table, index) in availableTables"
                         v-on:click="chooseTable(table)"
-                        v-bind:key="table" v-bind:class="{ 'active': chosenTableNumber === table }">{{ table }}</button>
+                        v-bind:key="index" v-bind:class="{ 'active': chosenTableNumber === table }">{{ table }}</button>
                 <!--                    <button class="button">8</button>-->
                 <!--                    <button class="button">12</button>-->
                 <!--                    <button class="button">17</button>-->
@@ -116,7 +116,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["updateIsOpenBookModal"]),
+    ...mapMutations(["updateIsOpenBookModal", "updateIsOpenTransactionModal", "updateSuccessMessage"]),
     ...mapActions(["bookTableSaveData", "fetchActiveOrders"]),
     async bookPlaceTable() {
       if (this.chosenTableNumber) {
@@ -125,7 +125,8 @@ export default {
           tableId: this.chosenTableNumber,
         });
         if (bookTableWriteRes.tx.status) {
-          console.log(false)
+          this.updateIsOpenTransactionModal(true);
+          this.updateSuccessMessage(true);
         }
         this.bookTableSaveData({
           placeId: this.modalBookDataToProcessGetter.ID,
